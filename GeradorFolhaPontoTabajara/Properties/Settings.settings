@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GeradorFolhaPontoTabajara.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="pathEntrada" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Temp\GPPT</Value>
+    </Setting>
+    <Setting Name="pathSaida" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Temp\GPPT\Saida</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
