@@ -25,8 +25,8 @@ namespace GeradorFolhaPontoTabajara
         }
 
         private static readonly Random SRandom = new Random(100);
+        private int soma = 0;
 
-        
         private int GerarIndexAleatorioPadrao()
         {
             return SRandom.Next(0, PastaPadroes.Length - 1);
@@ -41,31 +41,54 @@ namespace GeradorFolhaPontoTabajara
 
         private Padrao[] _conteudosAleatorios = null;
 
-        private static int GerarMinutoAleatorio()
+        private static int GerarMinutoAleatorio(int soma, int variacaoMin,int  variacaoMax, bool inicioTrabalho)
         {
-            return SRandom.Next(-5, 15);
+            if (inicioTrabalho) soma = -soma;
+            int minutoNegativo = 0;
+            int minutoPostivo = 0;
+           
+
+            if (soma < 0)
+            {
+                minutoPostivo = -soma+ 5;
+            }
+            else if(soma > 0)
+            {
+                minutoNegativo = -soma - 5;
+            }
+            else
+            {
+                minutoNegativo = -variacaoMin;
+                minutoPostivo = variacaoMax;
+            }
+            return SRandom.Next(minutoNegativo, minutoPostivo);
         }
 
-        private TimeSpan GerarTimespanAleatorio(int hora)
+        private TimeSpan GerarTimespanAleatorio(int hora, int variacaoMin,int variacaoMax,bool inicioTrabalho)
         {
-            return new TimeSpan(hora, GerarMinutoAleatorio(), 0);
+            int minutos = GerarMinutoAleatorio(soma, variacaoMin, variacaoMax, inicioTrabalho);
+            if(inicioTrabalho)soma = soma - minutos;
+            else soma = soma + minutos;
+            return new TimeSpan(hora, minutos, 0);
         }
 
-        private Padrao[] GeraConteudosAleatorios()
+        private Padrao[] GeraConteudosAleatorios(GeradorArgs args)
         {
 
             int indexPadrao = GerarIndexAleatorioPadrao();
             var pathPadrao = this.PastaPadroes[indexPadrao];
 
             var result = new List<Padrao>();
+            int variacaoMin = args.MargemAtraso.MinimoMinutos;
+            int variacaoMax = args.MargemAtraso.MaximoMinutos;
             for (int dia = 1; dia <= 31; dia++)
             {
                 result.Add(new Padrao()
                 {
-                    Inicio = GeradorNumeros.FromTimeSpan(GerarTimespanAleatorio(8)),
-                    IntervaloInicio = GeradorNumeros.FromTimeSpan(GerarTimespanAleatorio(12)),
-                    IntervaloFim = GeradorNumeros.FromTimeSpan(GerarTimespanAleatorio(14)),
-                    Fim = GeradorNumeros.FromTimeSpan(GerarTimespanAleatorio(18)),
+                    Inicio = GeradorNumeros.FromTimeSpan(GerarTimespanAleatorio(9, variacaoMin, variacaoMax,true)),
+                    IntervaloInicio = GeradorNumeros.FromTimeSpan(GerarTimespanAleatorio(12, variacaoMin, variacaoMax,false)),
+                    IntervaloFim = GeradorNumeros.FromTimeSpan(GerarTimespanAleatorio(14, variacaoMin, variacaoMax,true)),
+                    Fim = GeradorNumeros.FromTimeSpan(GerarTimespanAleatorio(19, variacaoMin, variacaoMax,false)),
                     Assinatura = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(pathPadrao, "Assinatura.png"))
                 });
             }
@@ -75,7 +98,8 @@ namespace GeradorFolhaPontoTabajara
 
         protected override void DoBeforePreencherTabelaHorarios(GeradorArgs args, Info info)
         {
-            this._conteudosAleatorios = this.GeraConteudosAleatorios();
+            
+            this._conteudosAleatorios = this.GeraConteudosAleatorios(args);
         }
 
         protected override Padrao DoGetConteudoLinha(GeradorArgs args, Info info, int numeroLinha)
