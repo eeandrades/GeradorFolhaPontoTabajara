@@ -8,6 +8,6 @@ namespace GeradorFolhaPontoTabajara
 {
     public interface IGerador
     {
-        void Execute(string pdfSourcePath, string pdfDestinationPath);
+        void Execute(GeradorArgs args);
     }
 }

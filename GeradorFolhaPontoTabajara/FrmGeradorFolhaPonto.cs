@@ -13,6 +13,8 @@ namespace GeradorFolhaPontoTabajara
     public partial class FrmGeradorFolhaPonto : Form
     {
         private GeradorController _controller = new GeradorController();
+
+        private static readonly Color[] SCoresCaneta = { Color.Black, Color.Blue, Color.Red, Color.DarkGray, Color.Green};
         public FrmGeradorFolhaPonto()
         {
             InitializeComponent();
@@ -35,6 +37,10 @@ namespace GeradorFolhaPontoTabajara
 
             this.cbbImplementacao.DisplayMember = nameof(Type.FullName);
             this.cbbImplementacao.DataSource = this._controller.ListarGeradores();
+
+
+            this.cbbCorCaneta.DataSource = SCoresCaneta;
+
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -80,6 +86,16 @@ namespace GeradorFolhaPontoTabajara
             this.errorProvider.Clear();
         }
 
+        private GeradorArgs CreateArgs()
+        {
+            return new GeradorArgs(
+                (Color)this.cbbCorCaneta.SelectedItem,
+                new Atraso(Convert.ToInt32(this.txbAtrasoMinimo.Text), Convert.ToInt32(this.txbAtrasoMaximo.Text)),
+            this.txbPastaEntrada.Text,
+            this.txbPastaSaida.Text);
+
+        }
+
         #region eventos
         private void BtnGerar_Click(object sender, EventArgs e)
         {
@@ -93,7 +109,7 @@ namespace GeradorFolhaPontoTabajara
                 return;
             try
             {
-                var count = this._controller.Gerar((Type) this.cbbImplementacao.SelectedItem, this.txbPastaEntrada.Text, this.txbPastaSaida.Text);
+                var count = this._controller.Gerar((Type)this.cbbImplementacao.SelectedItem, this.CreateArgs());
 
                 if (count > 0)
                 {
@@ -104,7 +120,7 @@ namespace GeradorFolhaPontoTabajara
                     this.errorProvider.SetError(this.btnGerar, "A pasta de entrada está vazia. Cetifique-se que as folhas de ponto em formato pdf se encontram nela.");
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 this.HandleException(ex, this.btnGerar);
             }

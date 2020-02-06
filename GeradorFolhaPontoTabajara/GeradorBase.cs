@@ -15,7 +15,7 @@ namespace GeradorFolhaPontoTabajara
         const int SPosicaoInicialLinha = 203;
         const int SPosicaoInicio = 103;
         const int SPosicaoIntervaloInicio = 207;
-        const int SPosicaoIntervaloFim = 264;
+        const int SPosicaoIntervaloFim = 258;
         const int SPosicaoFim = 316;
         const int SPosicaoAssinatura = 625;
 
@@ -55,10 +55,10 @@ namespace GeradorFolhaPontoTabajara
                 SRandom.Next(0, 5));
         }
 
-        private void MesclaBitmap(Bitmap bmp, Bitmap part, Point start)
+        private void MesclaBitmap(Bitmap bmp, Bitmap part, Point start, Color corCaneta)
         {
             var posicaoAleatoria = GeraVariacaoPosicaoAleatoria();
-            bmp.Merge(part, new Point(posicaoAleatoria.X + start.X, posicaoAleatoria.Y + start.Y), Color.Blue);
+            bmp.Merge(part, new Point(posicaoAleatoria.X + start.X, posicaoAleatoria.Y + start.Y), corCaneta);
         }
 
         private static bool IncrementaLinha(Bitmap bmp, ref int linhaAtual)
@@ -83,20 +83,20 @@ namespace GeradorFolhaPontoTabajara
 
         }
 
-        protected virtual void DoBeforePreencherTabelaHorarios(Bitmap bmpFolhaPonto)
+        protected virtual void DoBeforePreencherTabelaHorarios(GeradorArgs args, Info info)
         {
 
         }
 
-        protected virtual void DoAfterPreencherTabelaHorarios(Bitmap bmpFolhaPonto)
+        protected virtual void DoAfterPreencherTabelaHorarios(GeradorArgs args, Info info)
         {
 
         }
 
-
-        private void PreencherTabelaHorarios(Bitmap bmpFolhaPonto)
+        private Info GetInformacoes(Bitmap bmpFolhaPonto, out IEnumerable<int> linhasConteudos)
         {
-            this.DoBeforePreencherTabelaHorarios(bmpFolhaPonto);
+            int qtdDias = 0;
+            var linhasValidas = new List<int>();
 
             var linha = SPosicaoInicialLinha;
             int[] SCoresMarcacaoTabela = { -13553359, -16316665, -16579837, -16777216 };
@@ -111,31 +111,50 @@ namespace GeradorFolhaPontoTabajara
 
                 if (!feriado && areaTabela)
                 {
-                    var conteudoLinha = this.DoGetConteudoLinha(dia-1);
-
-
-                    MesclaBitmap(bmpFolhaPonto, conteudoLinha.Inicio, new Point(SPosicaoInicio, linha));
-                    MesclaBitmap(bmpFolhaPonto, conteudoLinha.IntervaloInicio, new Point(SPosicaoIntervaloInicio, linha));
-                    MesclaBitmap(bmpFolhaPonto, conteudoLinha.IntervaloFim, new Point(SPosicaoIntervaloFim, linha));
-                    MesclaBitmap(bmpFolhaPonto, conteudoLinha.Fim, new Point(SPosicaoFim, linha));
-                    MesclaBitmap(bmpFolhaPonto, conteudoLinha.Assinatura, new Point(SPosicaoAssinatura, linha));
+                    linhasValidas.Add(linha);
                 }
 
                 if (!areaTabela || !IncrementaLinha(bmpFolhaPonto, ref linha))
                     break;
+                qtdDias++;
             }
 
-            this.DoAfterPreencherTabelaHorarios(bmpFolhaPonto);
+            linhasConteudos = linhasValidas;
+            return new Info(bmpFolhaPonto, qtdDias, linhasValidas.Count);
         }
 
-        protected abstract Padrao DoGetConteudoLinha(int numeroLinha);
 
-
-        void IGerador.Execute(string pdfSourcePath, string pdfDestinationPath)
+        private void PreencherTabelaHorarios(GeradorArgs args, Bitmap bmpFolhaPonto)
         {
-            var img = PdfToBitmap(pdfSourcePath);
-            PreencherTabelaHorarios(img);
-            Save(pdfDestinationPath, img);
+            var info = GetInformacoes(bmpFolhaPonto, out var linhasConteudo);
+
+            this.DoBeforePreencherTabelaHorarios(args, info);
+
+
+            int[] SCoresMarcacaoTabela = { -13553359, -16316665, -16579837, -16777216 };
+
+            int indexLinha = 0;
+
+            foreach (int linha in linhasConteudo)
+            {
+                var conteudoLinha = this.DoGetConteudoLinha(args, info, indexLinha++);
+                MesclaBitmap(bmpFolhaPonto, conteudoLinha.Inicio, new Point(SPosicaoInicio, linha), args.CorCaneta);
+                MesclaBitmap(bmpFolhaPonto, conteudoLinha.IntervaloInicio, new Point(SPosicaoIntervaloInicio, linha), args.CorCaneta);
+                MesclaBitmap(bmpFolhaPonto, conteudoLinha.IntervaloFim, new Point(SPosicaoIntervaloFim, linha), args.CorCaneta);
+                MesclaBitmap(bmpFolhaPonto, conteudoLinha.Fim, new Point(SPosicaoFim, linha), args.CorCaneta);
+                MesclaBitmap(bmpFolhaPonto, conteudoLinha.Assinatura, new Point(SPosicaoAssinatura, linha), args.CorCaneta);
+            }
+            this.DoAfterPreencherTabelaHorarios(args, info);
+        }
+
+        protected abstract Padrao DoGetConteudoLinha(GeradorArgs args, Info info, int numeroLinha);
+
+
+        void IGerador.Execute(GeradorArgs args)
+        {
+            var img = PdfToBitmap(args.PdfSourcePath);
+            PreencherTabelaHorarios(args, img);
+            Save(args.PdfDestinationPath, img);
         }
     }
 }

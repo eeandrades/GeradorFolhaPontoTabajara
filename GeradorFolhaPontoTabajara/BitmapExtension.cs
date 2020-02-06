@@ -10,7 +10,7 @@ namespace GeradorFolhaPontoTabajara
     public static class BitmapExtension
     {
         private static readonly int[] STransparentColors = { 0, 16777215 };
-        public static void Merge(this Bitmap bmp, Bitmap part, Point start, Color cor)
+        public static Point Merge(this Bitmap bmp, Bitmap part, Point start, Color cor)
         {
             //var posicaoAleatoria = GeraVariacaoPosicaoAleatoria();
 
@@ -21,9 +21,11 @@ namespace GeradorFolhaPontoTabajara
                     var posX = start.X + x;
                     var posY = start.Y + y;
 
-                    if (!STransparentColors.Contains(pixel.ToArgb()) && posX < bmp.Width && posY < bmp.Height )
+                    if (!STransparentColors.Contains(pixel.ToArgb()) && posX < bmp.Width && posY < bmp.Height)
                         bmp.SetPixel(posX, posY, cor);
                 }
+
+            return new Point(start.X + part.Width, start.Y);
         }
     }
 }

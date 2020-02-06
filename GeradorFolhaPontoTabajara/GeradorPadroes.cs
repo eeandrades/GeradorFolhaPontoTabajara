@@ -14,11 +14,11 @@ namespace GeradorFolhaPontoTabajara
     /// Implementar ao gerador utilizando padrões de bitmpas com os intervalos de hora e assinatura
     /// </summary>
 
-    class GeradorImplementacaoPadroes : GeradorBase
+    class GeradorPadroes : GeradorBase
     {
         private string[] PastaPadroes { get; }
 
-        public GeradorImplementacaoPadroes()
+        public GeradorPadroes()
         {
             var pastaPadroes = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Padroes");
             this.PastaPadroes = System.IO.Directory.GetDirectories(pastaPadroes);
@@ -39,7 +39,7 @@ namespace GeradorFolhaPontoTabajara
                 SRandom.Next(0, 5));
         }
 
-        protected override Padrao DoGetConteudoLinha(int numeroLinha)
+        protected override Padrao DoGetConteudoLinha(GeradorArgs args, Info info, int numeroLinha)
         {
             int indexPadrao = GerarIndexAleatorioPadrao();
             var pathPadrao = this.PastaPadroes[indexPadrao];

@@ -6,7 +6,13 @@
       <Value Profile="(Default)">D:\Temp\GPPT</Value>
     </Setting>
     <Setting Name="pathSaida" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Temp\GPPT\Saida</Value>
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="atrasoMinimo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="atrasoMaximo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">10</Value>
     </Setting>
   </Settings>
 </SettingsFile>
