@@ -32,6 +32,7 @@ namespace GeradorFolhaPontoTabajara
         private static readonly int[] SCorFundoPadrao = { 0, 16777215 };
         private static int[] SCoresMarcacaoTabela = { -13553359, -16316665, -16579837, -16777216 };
         private static readonly Random SRandom = new Random(100);
+        const int SPosicaoInicialLinha = 203;
 
         protected abstract Color DoGetCorCaneta();
 
@@ -92,7 +93,7 @@ namespace GeradorFolhaPontoTabajara
 
         protected override void DoPreencher(Bitmap bmpFolhaPonto)
         {
-            var linha = 203;
+            var linha = SPosicaoInicialLinha;
             for (int dia = 1; dia <= 31; dia++)
             {
                 int linhaConteudo = linha + 10;

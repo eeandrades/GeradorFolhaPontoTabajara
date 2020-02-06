@@ -18,8 +18,11 @@ namespace GeradorFolhaPontoTabajara
                 for (int y = 0; y < part.Height; y++)
                 {
                     var pixel = part.GetPixel(x, y);
-                    if (!STransparentColors.Contains(pixel.ToArgb()))
-                        bmp.SetPixel(start.X + x, start.Y + y, cor);
+                    var posX = start.X + x;
+                    var posY = start.Y + y;
+
+                    if (!STransparentColors.Contains(pixel.ToArgb()) && posX < bmp.Width && posY < bmp.Height )
+                        bmp.SetPixel(posX, posY, cor);
                 }
         }
     }
