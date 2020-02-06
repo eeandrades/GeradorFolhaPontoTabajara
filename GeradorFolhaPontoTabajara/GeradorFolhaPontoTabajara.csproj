@@ -78,14 +78,14 @@
       <DependentUpon>FrmGeradorFolhaPonto.cs</DependentUpon>
     </Compile>
     <Compile Include="GeradorBase.cs" />
-    <Compile Include="GeradorImplementacaoPadroes.cs" />
     <Compile Include="GeradorImplementacaoPadroesAleatorio.cs" />
-    <Compile Include="GeradorImplementacaoPadroesBase.cs" />
+    <Compile Include="GeradorImplementacaoPadroes.cs" />
     <Compile Include="GeradorController.cs" />
     <Compile Include="IGerador.cs" />
     <Compile Include="Padrao.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomExtensions.cs" />
     <EmbeddedResource Include="FrmGeradorFolhaPonto.resx">
       <DependentUpon>FrmGeradorFolhaPonto.cs</DependentUpon>
     </EmbeddedResource>

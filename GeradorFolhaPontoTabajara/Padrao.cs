@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GeradorFolhaPontoTabajara
 {
-    class Padrao
+    public class Padrao
     {
         public Bitmap Inicio { get; set; }
 

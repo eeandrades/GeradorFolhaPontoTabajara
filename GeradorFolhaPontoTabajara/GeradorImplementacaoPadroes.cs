@@ -14,27 +14,46 @@ namespace GeradorFolhaPontoTabajara
     /// Implementar ao gerador utilizando padrões de bitmpas com os intervalos de hora e assinatura
     /// </summary>
 
-    class GeradorImplementacaoPadroes : GeradorImplementacaoPadroesBase
+    class GeradorImplementacaoPadroes : GeradorBase
     {
-        protected override Color DoGetCorCaneta()
-        {
-            return Color.Blue;
-        }
-    }
+        private string[] PastaPadroes { get; }
 
-    class GeradorImplementacaoPadroesVermelho : GeradorImplementacaoPadroesBase
-    {
-        protected override Color DoGetCorCaneta()
+        public GeradorImplementacaoPadroes()
         {
-            return Color.Red;
+            var pastaPadroes = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Padroes");
+            this.PastaPadroes = System.IO.Directory.GetDirectories(pastaPadroes);
         }
-    }
 
-    class GeradorImplementacaoPadroesPreto : GeradorImplementacaoPadroesBase
-    {
-        protected override Color DoGetCorCaneta()
+        private static readonly Random SRandom = new Random(100);
+
+        
+        private int GerarIndexAleatorioPadrao()
         {
-            return ColorTranslator.FromHtml("#141414");
+            return SRandom.Next(0, PastaPadroes.Length - 1);
         }
+
+        private static Point GeraVariacaoPosicaoAleatoria()
+        {
+            return new Point(
+                SRandom.Next(0, 4),
+                SRandom.Next(0, 5));
+        }
+
+        protected override Padrao DoGetConteudoLinha(int numeroLinha)
+        {
+            int indexPadrao = GerarIndexAleatorioPadrao();
+            var pathPadrao = this.PastaPadroes[indexPadrao];
+
+            var path = System.IO.Path.Combine(pathPadrao);
+            return new Padrao()
+            {
+                Inicio = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "inicio.png")),
+                IntervaloInicio = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "IntInicio.png")),
+                IntervaloFim = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "IntFim.png")),
+                Fim = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "Fim.png")),
+                Assinatura = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "Assinatura.png"))
+            };
+        }
+
     }
 }

@@ -25,74 +25,12 @@ namespace GeradorFolhaPontoTabajara
             this.PastaPadroes = System.IO.Directory.GetDirectories(pastaPadroes);
         }
 
-        private const int SPosicaoInicio = 103;
-        private const int SPosicaoIntervaloInicio = 207;
-        private const int SPosicaoIntervaloFim = 264;
-        private const int SPosicaoFim = 316;
-        private const int SPosicaoAssinatura = 625;
-        private static readonly int[] SCorFundoPadrao = { 0, 16777215 };
-        private static int[] SCoresMarcacaoTabela = { -13553359, -16316665, -16579837, -16777216 };
-        private static readonly Random SRandom = new Random(100);
+        private List<Padrao> _conteudos = null;
 
-        private Color DoGetCorCaneta() => Color.Blue;
-
-        private static bool IncrementaLinha(Bitmap bmp, ref int linhaAtual)
+        private List<Padrao> CriaConteudosTabelaHorarioAleatorios()
         {
-            linhaAtual += 10;
-            int count = 0;
-            while (true)
-            {
+            var result = new List<Padrao>();
 
-                if (bmp.GetPixel(SPosicaoInicio, linhaAtual).ToArgb() == -16777216)
-                {
-                    break;
-                }
-
-                if (count++ > 30)
-                    return false;
-
-                linhaAtual++;
-            }
-
-            return true;
-
-        }
-
-        private void MesclaBitmap(Bitmap bmp, Bitmap part, Point start)
-        {
-            var posicaoAleatoria = GeraVariacaoPosicaoAleatoria();
-            bmp.Merge(part, new Point(posicaoAleatoria.X + start.X, posicaoAleatoria.Y + start.Y), DoGetCorCaneta());
-        }
-        private int GerarIndexAleatorioPadrao()
-        {
-            return SRandom.Next(0, PastaPadroes.Length - 1);
-        }
-
-        private static Point GeraVariacaoPosicaoAleatoria()
-        {
-            return new Point(
-                SRandom.Next(0, 4),
-                SRandom.Next(0, 5));
-        }
-
-        private Padrao GerarPadrao()
-        {
-            int indexPadrao = GerarIndexAleatorioPadrao();
-            var pathPadrao = this.PastaPadroes[indexPadrao];
-
-            var path = System.IO.Path.Combine(pathPadrao);
-            return new Padrao()
-            {
-                Inicio = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "inicio.png")),
-                IntervaloInicio = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "IntInicio.png")),
-                IntervaloFim = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "IntFim.png")),
-                Fim = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "Fim.png")),
-                Assinatura = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "Assinatura.png"))
-            };
-        }
-
-        protected override void DoPreencher(Bitmap bmpFolhaPonto)
-        {
             int numeroPastas = PastaPadroes.Length;
             Bitmap[] inicio = new Bitmap[numeroPastas];
             Bitmap[] intervaloInicio = new Bitmap[numeroPastas];
@@ -116,10 +54,10 @@ namespace GeradorFolhaPontoTabajara
                 intervaloFim[i] = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "IntFim.png"));
                 fim[i] = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "Fim.png"));
                 assinatura[i] = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "Assinatura.png"));
-
             }
-            
+
             Random rnd = new Random();
+
             rnd.Shuffle(inicio);
 
             rnd.Shuffle(intervaloInicio);
@@ -130,9 +68,7 @@ namespace GeradorFolhaPontoTabajara
 
             rnd.Shuffle(assinatura);
 
-
             int indexAtual = 0;
-            var linha = 203;
             for (int dia = 1; dia <= 31; dia++)
             {
                 if (indexAtual == numeroPastas)
@@ -147,51 +83,29 @@ namespace GeradorFolhaPontoTabajara
                     rnd.Shuffle(fim);
 
                     rnd.Shuffle(assinatura);
-
                 }
-                int linhaConteudo = linha + 10;
 
-                bool feriado = bmpFolhaPonto.GetPixel(SPosicaoInicio, linhaConteudo).ToArgb() == -4473925;
-                var marcacaoTabela = bmpFolhaPonto.GetPixel(28, linhaConteudo);
-                bool areaTabela = dia < 29 || SCoresMarcacaoTabela.Contains(marcacaoTabela.ToArgb());
-
-                if (!feriado && areaTabela)
+                result.Add(new Padrao()
                 {
-                    var padrao = new Padrao()
-                    {
-                        Inicio = inicio[indexAtual],
-                        IntervaloInicio = intervaloInicio[indexAtual],
-                        IntervaloFim = intervaloFim[indexAtual],
-                        Fim = fim[indexAtual],
-                        Assinatura = assinatura[indexAtual]
-                    };
+                    Inicio = inicio[indexAtual],
+                    IntervaloInicio = intervaloInicio[indexAtual],
+                    IntervaloFim = intervaloFim[indexAtual],
+                    Fim = fim[indexAtual],
+                    Assinatura = assinatura[indexAtual]
+                });
 
-                    MesclaBitmap(bmpFolhaPonto, padrao.Inicio, new Point(SPosicaoInicio, linha));
-                    MesclaBitmap(bmpFolhaPonto, padrao.IntervaloInicio, new Point(SPosicaoIntervaloInicio, linha));
-                    MesclaBitmap(bmpFolhaPonto, padrao.IntervaloFim, new Point(SPosicaoIntervaloFim, linha));
-                    MesclaBitmap(bmpFolhaPonto, padrao.Fim, new Point(SPosicaoFim, linha));
-                    MesclaBitmap(bmpFolhaPonto, padrao.Assinatura, new Point(SPosicaoAssinatura, linha));
-                }
                 indexAtual++;
-                if (!areaTabela || !IncrementaLinha(bmpFolhaPonto, ref linha))
-                    break;
             }
+
+            return result;
         }
 
-       
-    }
-    static class RandomExtensions
-    {
-        public static void Shuffle<T>(this Random rng, T[] array)
+        protected override Padrao DoGetConteudoLinha(int numeroLinha)
         {
-            int n = array.Length;
-            while (n > 1)
-            {
-                int k = rng.Next(n--);
-                T temp = array[n];
-                array[n] = array[k];
-                array[k] = temp;
-            }
+            if (this._conteudos == null)
+                this._conteudos = this.CriaConteudosTabelaHorarioAleatorios();
+
+            return this._conteudos[numeroLinha];
         }
     }
 }
