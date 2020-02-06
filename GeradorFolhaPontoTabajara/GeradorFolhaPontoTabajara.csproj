@@ -79,6 +79,7 @@
     </Compile>
     <Compile Include="GeradorBase.cs" />
     <Compile Include="GeradorImplementacaoPadroes.cs" />
+    <Compile Include="GeradorImplementacaoPadroesAleatorio.cs" />
     <Compile Include="GeradorImplementacaoPadroesBase.cs" />
     <Compile Include="GeradorController.cs" />
     <Compile Include="IGerador.cs" />
