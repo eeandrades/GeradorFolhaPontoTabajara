@@ -17,13 +17,7 @@ namespace GeradorFolhaPontoTabajara
 
     class GeradorPadroesAleatorio : GeradorBase
     {
-        private string[] PastaPadroes { get; }
 
-        public GeradorPadroesAleatorio()
-        {
-            var pastaPadroes = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Padroes");
-            this.PastaPadroes = System.IO.Directory.GetDirectories(pastaPadroes);
-        }
 
         private List<Padrao> _conteudos = null;
 
@@ -31,24 +25,20 @@ namespace GeradorFolhaPontoTabajara
         {
             var result = new List<Padrao>();
 
-            int numeroPastas = PastaPadroes.Length;
+            int numeroPastas = base.PastasImagens.Length;
             Bitmap[] inicio = new Bitmap[numeroPastas];
             Bitmap[] intervaloInicio = new Bitmap[numeroPastas];
             Bitmap[] intervaloFim = new Bitmap[numeroPastas];
             Bitmap[] fim = new Bitmap[numeroPastas];
             Bitmap[] assinatura = new Bitmap[numeroPastas];
 
-            var pathPadrao = this.PastaPadroes[0];
+            
 
-            var path = System.IO.Path.Combine(pathPadrao);
+            //var path = System.IO.Path.Combine(pathPadrao);
 
             for (int i = 0; i < numeroPastas; i++)
             {
-
-                pathPadrao = this.PastaPadroes[i];
-
-                path = System.IO.Path.Combine(pathPadrao);
-
+                var path = this.PastasImagens[i];
                 inicio[i] = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "inicio.png"));
                 intervaloInicio[i] = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "IntInicio.png"));
                 intervaloFim[i] = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "IntFim.png"));

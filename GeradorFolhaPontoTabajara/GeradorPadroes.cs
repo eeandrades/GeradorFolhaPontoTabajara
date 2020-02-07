@@ -16,35 +16,9 @@ namespace GeradorFolhaPontoTabajara
 
     class GeradorPadroes : GeradorBase
     {
-        private string[] PastaPadroes { get; }
-
-        public GeradorPadroes()
-        {
-            var pastaPadroes = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Padroes");
-            this.PastaPadroes = System.IO.Directory.GetDirectories(pastaPadroes);
-        }
-
-        private static readonly Random SRandom = new Random(100);
-
-        
-        private int GerarIndexAleatorioPadrao()
-        {
-            return SRandom.Next(0, PastaPadroes.Length - 1);
-        }
-
-        private static Point GeraVariacaoPosicaoAleatoria()
-        {
-            return new Point(
-                SRandom.Next(0, 4),
-                SRandom.Next(0, 5));
-        }
-
         protected override Padrao DoGetConteudoLinha(GeradorArgs args, Info info, int numeroLinha)
         {
-            int indexPadrao = GerarIndexAleatorioPadrao();
-            var pathPadrao = this.PastaPadroes[indexPadrao];
-
-            var path = System.IO.Path.Combine(pathPadrao);
+            var path = base.GetPastaImagemAleatoria();
             return new Padrao()
             {
                 Inicio = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "inicio.png")),

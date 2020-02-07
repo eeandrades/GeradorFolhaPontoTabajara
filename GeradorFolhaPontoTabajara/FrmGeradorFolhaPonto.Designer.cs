@@ -50,14 +50,19 @@
             this.txbAtrasoMinimo = new System.Windows.Forms.TextBox();
             this.txbPastaSaida = new System.Windows.Forms.TextBox();
             this.txbPastaEntrada = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbbOcrs = new System.Windows.Forms.ComboBox();
+            this.lnkReferenciaGoogleCloudVision = new System.Windows.Forms.LinkLabel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.successProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblPastaEntrada
             // 
             this.lblPastaEntrada.AutoSize = true;
-            this.lblPastaEntrada.Location = new System.Drawing.Point(28, 22);
+            this.lblPastaEntrada.Location = new System.Drawing.Point(362, 11);
             this.lblPastaEntrada.Name = "lblPastaEntrada";
             this.lblPastaEntrada.Size = new System.Drawing.Size(88, 13);
             this.lblPastaEntrada.TabIndex = 0;
@@ -66,7 +71,7 @@
             // lblPastaSaida
             // 
             this.lblPastaSaida.AutoSize = true;
-            this.lblPastaSaida.Location = new System.Drawing.Point(28, 75);
+            this.lblPastaSaida.Location = new System.Drawing.Point(362, 64);
             this.lblPastaSaida.Name = "lblPastaSaida";
             this.lblPastaSaida.Size = new System.Drawing.Size(79, 13);
             this.lblPastaSaida.TabIndex = 0;
@@ -74,7 +79,7 @@
             // 
             // btnGerar
             // 
-            this.btnGerar.Location = new System.Drawing.Point(476, 229);
+            this.btnGerar.Location = new System.Drawing.Point(810, 271);
             this.btnGerar.Name = "btnGerar";
             this.btnGerar.Size = new System.Drawing.Size(75, 23);
             this.btnGerar.TabIndex = 2;
@@ -84,7 +89,7 @@
             // 
             // btnSelectFolderEntrada
             // 
-            this.btnSelectFolderEntrada.Location = new System.Drawing.Point(476, 36);
+            this.btnSelectFolderEntrada.Location = new System.Drawing.Point(810, 25);
             this.btnSelectFolderEntrada.Name = "btnSelectFolderEntrada";
             this.btnSelectFolderEntrada.Size = new System.Drawing.Size(34, 23);
             this.btnSelectFolderEntrada.TabIndex = 3;
@@ -92,11 +97,11 @@
             this.btnSelectFolderEntrada.Text = "...";
             this.toolTip1.SetToolTip(this.btnSelectFolderEntrada, "Selecionar Pasta");
             this.btnSelectFolderEntrada.UseVisualStyleBackColor = true;
-            this.btnSelectFolderEntrada.Click += new System.EventHandler(this.btnSelectFolder_Click);
+            this.btnSelectFolderEntrada.Click += new System.EventHandler(this.BtnSelectFolder_Click);
             // 
             // btnSelectFolderSaida
             // 
-            this.btnSelectFolderSaida.Location = new System.Drawing.Point(476, 88);
+            this.btnSelectFolderSaida.Location = new System.Drawing.Point(810, 77);
             this.btnSelectFolderSaida.Name = "btnSelectFolderSaida";
             this.btnSelectFolderSaida.Size = new System.Drawing.Size(34, 23);
             this.btnSelectFolderSaida.TabIndex = 3;
@@ -104,11 +109,11 @@
             this.btnSelectFolderSaida.Text = "...";
             this.toolTip1.SetToolTip(this.btnSelectFolderSaida, "Selecionar Pasta");
             this.btnSelectFolderSaida.UseVisualStyleBackColor = true;
-            this.btnSelectFolderSaida.Click += new System.EventHandler(this.btnSelectFolder_Click);
+            this.btnSelectFolderSaida.Click += new System.EventHandler(this.BtnSelectFolder_Click);
             // 
             // btnAbrirPastaEntrada
             // 
-            this.btnAbrirPastaEntrada.Location = new System.Drawing.Point(513, 36);
+            this.btnAbrirPastaEntrada.Location = new System.Drawing.Point(847, 25);
             this.btnAbrirPastaEntrada.Name = "btnAbrirPastaEntrada";
             this.btnAbrirPastaEntrada.Size = new System.Drawing.Size(34, 23);
             this.btnAbrirPastaEntrada.TabIndex = 3;
@@ -116,11 +121,11 @@
             this.btnAbrirPastaEntrada.Text = ">";
             this.toolTip1.SetToolTip(this.btnAbrirPastaEntrada, "Exibir Pasta");
             this.btnAbrirPastaEntrada.UseVisualStyleBackColor = true;
-            this.btnAbrirPastaEntrada.Click += new System.EventHandler(this.btnAbrirPasta_Click);
+            this.btnAbrirPastaEntrada.Click += new System.EventHandler(this.BtnAbrirPasta_Click);
             // 
             // btnAbrirPastaSaida
             // 
-            this.btnAbrirPastaSaida.Location = new System.Drawing.Point(513, 88);
+            this.btnAbrirPastaSaida.Location = new System.Drawing.Point(847, 77);
             this.btnAbrirPastaSaida.Name = "btnAbrirPastaSaida";
             this.btnAbrirPastaSaida.Size = new System.Drawing.Size(34, 23);
             this.btnAbrirPastaSaida.TabIndex = 3;
@@ -128,7 +133,7 @@
             this.btnAbrirPastaSaida.Text = ">";
             this.toolTip1.SetToolTip(this.btnAbrirPastaSaida, "Exibir Pasta");
             this.btnAbrirPastaSaida.UseVisualStyleBackColor = true;
-            this.btnAbrirPastaSaida.Click += new System.EventHandler(this.btnAbrirPasta_Click);
+            this.btnAbrirPastaSaida.Click += new System.EventHandler(this.BtnAbrirPasta_Click);
             // 
             // errorProvider
             // 
@@ -144,7 +149,7 @@
             // 
             this.cbbImplementacao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbImplementacao.FormattingEnabled = true;
-            this.cbbImplementacao.Location = new System.Drawing.Point(31, 189);
+            this.cbbImplementacao.Location = new System.Drawing.Point(365, 178);
             this.cbbImplementacao.Name = "cbbImplementacao";
             this.cbbImplementacao.Size = new System.Drawing.Size(516, 21);
             this.cbbImplementacao.TabIndex = 4;
@@ -152,7 +157,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 173);
+            this.label1.Location = new System.Drawing.Point(363, 162);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(45, 13);
             this.label1.TabIndex = 0;
@@ -161,7 +166,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(28, 125);
+            this.label2.Location = new System.Drawing.Point(362, 114);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 13);
             this.label2.TabIndex = 0;
@@ -170,7 +175,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(104, 125);
+            this.label3.Location = new System.Drawing.Point(438, 114);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(76, 13);
             this.label3.TabIndex = 0;
@@ -180,7 +185,7 @@
             // 
             this.cbbCorCaneta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbCorCaneta.FormattingEnabled = true;
-            this.cbbCorCaneta.Location = new System.Drawing.Point(183, 141);
+            this.cbbCorCaneta.Location = new System.Drawing.Point(517, 130);
             this.cbbCorCaneta.Name = "cbbCorCaneta";
             this.cbbCorCaneta.Size = new System.Drawing.Size(364, 21);
             this.cbbCorCaneta.TabIndex = 4;
@@ -188,7 +193,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(180, 125);
+            this.label4.Location = new System.Drawing.Point(514, 114);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(74, 13);
             this.label4.TabIndex = 0;
@@ -197,7 +202,7 @@
             // txbAtrasoMaximo
             // 
             this.txbAtrasoMaximo.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::GeradorFolhaPontoTabajara.Properties.Settings.Default, "atrasoMaximo", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txbAtrasoMaximo.Location = new System.Drawing.Point(107, 141);
+            this.txbAtrasoMaximo.Location = new System.Drawing.Point(441, 130);
             this.txbAtrasoMaximo.Name = "txbAtrasoMaximo";
             this.txbAtrasoMaximo.Size = new System.Drawing.Size(70, 20);
             this.txbAtrasoMaximo.TabIndex = 1;
@@ -206,7 +211,7 @@
             // txbAtrasoMinimo
             // 
             this.txbAtrasoMinimo.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::GeradorFolhaPontoTabajara.Properties.Settings.Default, "atrasoMinimo", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txbAtrasoMinimo.Location = new System.Drawing.Point(31, 141);
+            this.txbAtrasoMinimo.Location = new System.Drawing.Point(365, 130);
             this.txbAtrasoMinimo.Name = "txbAtrasoMinimo";
             this.txbAtrasoMinimo.Size = new System.Drawing.Size(70, 20);
             this.txbAtrasoMinimo.TabIndex = 1;
@@ -215,7 +220,7 @@
             // txbPastaSaida
             // 
             this.txbPastaSaida.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::GeradorFolhaPontoTabajara.Properties.Settings.Default, "pathSaida", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txbPastaSaida.Location = new System.Drawing.Point(31, 91);
+            this.txbPastaSaida.Location = new System.Drawing.Point(365, 80);
             this.txbPastaSaida.Name = "txbPastaSaida";
             this.txbPastaSaida.Size = new System.Drawing.Size(439, 20);
             this.txbPastaSaida.TabIndex = 1;
@@ -224,18 +229,62 @@
             // txbPastaEntrada
             // 
             this.txbPastaEntrada.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::GeradorFolhaPontoTabajara.Properties.Settings.Default, "pathEntrada", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txbPastaEntrada.Location = new System.Drawing.Point(31, 38);
+            this.txbPastaEntrada.Location = new System.Drawing.Point(365, 27);
             this.txbPastaEntrada.Name = "txbPastaEntrada";
             this.txbPastaEntrada.Size = new System.Drawing.Size(439, 20);
             this.txbPastaEntrada.TabIndex = 0;
             this.txbPastaEntrada.Text = global::GeradorFolhaPontoTabajara.Properties.Settings.Default.pathEntrada;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(362, 210);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(196, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "OCR para detecção do periodo da folha";
+            // 
+            // cbbOcrs
+            // 
+            this.cbbOcrs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbOcrs.FormattingEnabled = true;
+            this.cbbOcrs.Location = new System.Drawing.Point(364, 226);
+            this.cbbOcrs.Name = "cbbOcrs";
+            this.cbbOcrs.Size = new System.Drawing.Size(516, 21);
+            this.cbbOcrs.TabIndex = 4;
+            // 
+            // lnkReferenciaGoogleCloudVision
+            // 
+            this.lnkReferenciaGoogleCloudVision.AutoSize = true;
+            this.lnkReferenciaGoogleCloudVision.Location = new System.Drawing.Point(363, 250);
+            this.lnkReferenciaGoogleCloudVision.Name = "lnkReferenciaGoogleCloudVision";
+            this.lnkReferenciaGoogleCloudVision.Size = new System.Drawing.Size(404, 26);
+            this.lnkReferenciaGoogleCloudVision.TabIndex = 6;
+            this.lnkReferenciaGoogleCloudVision.TabStop = true;
+            this.lnkReferenciaGoogleCloudVision.Tag = "https://cloud.google.com/vision/docs/quickstart-client-libraries";
+            this.lnkReferenciaGoogleCloudVision.Text = "Para o google cloud vision deverá ser criado uma autorização conforme o lik abaix" +
+    "o:\r\nhttps://cloud.google.com/vision/docs/quickstart-client-libraries";
+            this.lnkReferenciaGoogleCloudVision.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LnkReferenciaGoogleCloudVision_LinkClicked);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::GeradorFolhaPontoTabajara.Properties.Resources.logo;
+            this.pictureBox1.Location = new System.Drawing.Point(2, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(354, 264);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
+            // 
             // FrmGeradorFolhaPonto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(558, 265);
+            this.ClientSize = new System.Drawing.Size(897, 305);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.lnkReferenciaGoogleCloudVision);
             this.Controls.Add(this.cbbCorCaneta);
+            this.Controls.Add(this.cbbOcrs);
             this.Controls.Add(this.cbbImplementacao);
             this.Controls.Add(this.btnAbrirPastaSaida);
             this.Controls.Add(this.btnSelectFolderSaida);
@@ -246,6 +295,7 @@
             this.Controls.Add(this.txbAtrasoMinimo);
             this.Controls.Add(this.txbPastaSaida);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
@@ -258,6 +308,7 @@
             this.Text = "Gerador de Folha de Ponto";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.successProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -285,6 +336,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.LinkLabel lnkReferenciaGoogleCloudVision;
+        private System.Windows.Forms.ComboBox cbbOcrs;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

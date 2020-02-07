@@ -12,9 +12,9 @@ namespace GeradorFolhaPontoTabajara
 {
     public partial class FrmGeradorFolhaPonto : Form
     {
-        private GeradorController _controller = new GeradorController();
+        private readonly GeradorController _controller = new GeradorController();
 
-        private static readonly Color[] SCoresCaneta = { Color.Black, Color.Blue, Color.Red, Color.DarkGray, Color.Green};
+        private static readonly Color[] SCoresCaneta = { Color.Black, Color.Blue, Color.Red, Color.DarkGray, Color.Green };
         public FrmGeradorFolhaPonto()
         {
             InitializeComponent();
@@ -40,6 +40,8 @@ namespace GeradorFolhaPontoTabajara
 
 
             this.cbbCorCaneta.DataSource = SCoresCaneta;
+
+            this.cbbOcrs.DataSource = this._controller.ListarOcrs();
 
         }
 
@@ -88,12 +90,14 @@ namespace GeradorFolhaPontoTabajara
 
         private GeradorArgs CreateArgs()
         {
+            var ocr = this._controller.CriarOcr((Type)this.cbbOcrs.SelectedItem);
+
             return new GeradorArgs(
                 (Color)this.cbbCorCaneta.SelectedItem,
                 new Atraso(Convert.ToInt32(this.txbAtrasoMinimo.Text), Convert.ToInt32(this.txbAtrasoMaximo.Text)),
-            this.txbPastaEntrada.Text,
-            this.txbPastaSaida.Text);
-
+                ocr,
+                this.txbPastaEntrada.Text,
+                this.txbPastaSaida.Text);
         }
 
         #region eventos
@@ -126,7 +130,7 @@ namespace GeradorFolhaPontoTabajara
             }
         }
 
-        private void btnSelectFolder_Click(object sender, EventArgs e)
+        private void BtnSelectFolder_Click(object sender, EventArgs e)
         {
             ClearMessages();
             var txb = ((Control)sender).Tag as TextBox;
@@ -139,7 +143,7 @@ namespace GeradorFolhaPontoTabajara
             }
         }
 
-        private void btnAbrirPasta_Click(object sender, EventArgs e)
+        private void BtnAbrirPasta_Click(object sender, EventArgs e)
         {
             ClearMessages();
             var txb = ((Control)sender).Tag as TextBox;
@@ -154,5 +158,11 @@ namespace GeradorFolhaPontoTabajara
             }
         }
         #endregion
+
+        private void LnkReferenciaGoogleCloudVision_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var control = (Control)sender;
+            System.Diagnostics.Process.Start(Convert.ToString(control.Tag));
+        }
     }
 }

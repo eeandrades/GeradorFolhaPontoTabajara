@@ -15,12 +15,13 @@ namespace GeradorFolhaPontoTabajara
         public int Gerar(Type geradorType, GeradorArgs args)
         {
             var pdfFiles = System.IO.Directory.GetFiles(args.PdfSourcePath, "*.pdf");
+            
 
             foreach(var pdfFile in pdfFiles)
             {
                 IGerador gerador = GeradorFactory.Create(geradorType);
                 var pdfOutput = System.IO.Path.Combine(args.PdfDestinationPath, System.IO.Path.GetFileName(pdfFile));
-                gerador.Execute(new GeradorArgs(args.CorCaneta, args.MargemAtraso, pdfFile, pdfOutput));
+                gerador.Execute(new GeradorArgs(args.CorCaneta, args.MargemAtraso, args.Ocr,  pdfFile, pdfOutput));
             }
 
             return pdfFiles.Length;
@@ -34,6 +35,16 @@ namespace GeradorFolhaPontoTabajara
         public IGerador CriarGerardor(Type tipoGerador)
         {
             return GeradorFactory.Create(tipoGerador);
+        }
+
+        public Type[] ListarOcrs()
+        {
+            return OcrFactory.ListaTodasImplementacoes();
+        }
+
+        public IOcr CriarOcr(Type tipoOcr)
+        {
+            return OcrFactory.Create(tipoOcr);
         }
     }
 }
