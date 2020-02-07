@@ -56,23 +56,24 @@ namespace GeradorFolhaPontoTabajara
             return (Bitmap)documemt.SaveAsImage(0, PdfImageType.Bitmap);
         }
 
-        //private PdfDocument BitmapToPdf(Bitmap bitmap)
-        //{
-        //    PdfDocument document = new PdfDocument();
-        //    var page = document.Pages.Add();
-        //    page.Canvas.DrawImage(PdfImage.FromImage(bitmap), new PointF(0, 0), bitmap.Size);
-        //    return document;
-        //}
+        private PdfDocument BitmapToPdf(Bitmap bitmap)
+        {
+            PdfDocument doc = new PdfDocument();
+            PdfImage pdfimage = PdfImage.FromImage(bitmap);
+
+            PdfUnitConvertor uinit = new PdfUnitConvertor();
+            SizeF pageSize = uinit.ConvertFromPixels(bitmap.Size, PdfGraphicsUnit.Point);
+            PdfPageBase page = doc.Pages.Add(pageSize, new PdfMargins(0f));
+
+            page.Canvas.DrawImage(pdfimage, new PointF(0, 0));
+
+            return doc;
+        }
 
         private void Save(string pdfDestinationPath, Bitmap img)
         {
-            string outpuPngFile = pdfDestinationPath + ".png";
-            if (System.IO.File.Exists(outpuPngFile))
-                System.IO.File.Delete(outpuPngFile);
-            img.Save(pdfDestinationPath + ".png", ImageFormat.Png);
-
-            //var newPdf = BitmapToPdf(img);
-            //newPdf.SaveToFile(pdfDestinationPath);
+            var newPdf = BitmapToPdf(img);
+            newPdf.SaveToFile(pdfDestinationPath);
         }
 
         private static readonly Random SRandom = new Random(100);
@@ -244,18 +245,9 @@ namespace GeradorFolhaPontoTabajara
             var xCentralizado = SPosicaoAssinaturaLeft + (SPosicaoAssinaturaWidth - assinatura.Width) / 2;
             var y = GetPosicaoTopDataAssinatura(bmpFolhaPonto) - assinatura.Height;
             bmpFolhaPonto.Merge(assinatura, new Point(xCentralizado + delta.X, y + delta.Y), args.CorCaneta);
-            AddNoise(bmpFolhaPonto, new Random().Next(40,80));
+            AddNoise(bmpFolhaPonto, new Random().Next(20,30));
         }
 
-
-        void IGerador.Execute(GeradorArgs args)
-        {
-            var img = PdfToBitmap(args.PdfSourcePath);
-            this.PreencherTabelaHorarios(args, img);
-            this.PreencherData(args, img);
-            this.PreencherAssinatura(args, img);
-            this.Save(args.PdfDestinationPath, img);
-        }
         public static Bitmap AddNoise(Bitmap OriginalImage, int Amount)
         {
             Random TempRandom = new Random();
@@ -279,6 +271,16 @@ namespace GeradorFolhaPontoTabajara
             }
 
             return OriginalImage;
+        }
+
+
+        void IGerador.Execute(GeradorArgs args)
+        {
+            var img = PdfToBitmap(args.PdfSourcePath);
+            this.PreencherTabelaHorarios(args, img);
+            this.PreencherData(args, img);
+            this.PreencherAssinatura(args, img);
+            this.Save(args.PdfDestinationPath, img);
         }
     }
 }
