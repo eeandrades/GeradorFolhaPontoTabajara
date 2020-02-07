@@ -180,7 +180,7 @@ namespace GeradorFolhaPontoTabajara
                 MesclaBitmap(bmpFolhaPonto, conteudoLinha.Assinatura, new Point(rnd.Next(SPosicaoAssinatura - 10, SPosicaoAssinatura + 10), linha), args.CorCaneta);
             }
 
-            AddNoise(bmpFolhaPonto, 75);
+            
             this.DoAfterPreencherTabelaHorarios(args, info);
         }
 
@@ -244,6 +244,8 @@ namespace GeradorFolhaPontoTabajara
             var y = GetPosicaoTopDataAssinatura(bmpFolhaPonto) - assinatura.Height;
 
             bmpFolhaPonto.Merge(assinatura, new Point(xCentralizado + delta.X, y + delta.Y), args.CorCaneta);
+
+            AddNoise(bmpFolhaPonto, new Random().Next(40,80));
 
         }
 
