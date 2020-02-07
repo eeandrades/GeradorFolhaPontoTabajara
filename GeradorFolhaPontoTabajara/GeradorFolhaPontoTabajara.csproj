@@ -157,7 +157,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="geradorfolhaponto-443dcb98d6c0.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -254,6 +253,9 @@
     <Content Include="Padroes\2\Assinatura.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Padroes\2\dois-pontos.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Padroes\2\Fim.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -298,6 +300,9 @@
     </Content>
     <Content Include="Padroes\3\Assinatura.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Padroes\3\dois-pontos.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Padroes\3\Fim.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -344,6 +349,9 @@
     <Content Include="Padroes\4\Assinatura.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Padroes\4\dois-pontos.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Padroes\4\Fim.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -388,6 +396,9 @@
     </Content>
     <Content Include="Padroes\5\Assinatura.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Padroes\5\dois-pontos.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Padroes\5\Fim.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

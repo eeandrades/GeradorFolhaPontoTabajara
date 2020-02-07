@@ -20,6 +20,26 @@ namespace GeradorFolhaPontoTabajara
         const int SPosicaoFim = 316;
         const int SPosicaoAssinatura = 625;
 
+        protected string[] PastasImagens { get; }
+
+
+        public GeradorBase()
+        {
+            var pastaPadroes = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Padroes");
+            this.PastasImagens = System.IO.Directory.GetDirectories(pastaPadroes);
+        }
+
+        private int GerarIndexAleatorioPadrao()
+        {
+            return SRandom.Next(0, PastasImagens.Length - 1);
+        }
+
+        protected string GetPastaImagemAleatoria()
+        {
+            var indexAleatorio = GerarIndexAleatorioPadrao();
+            return this.PastasImagens[indexAleatorio];
+        }
+
 
         private Bitmap PdfToBitmap(string pdfPath)
         {
@@ -28,13 +48,13 @@ namespace GeradorFolhaPontoTabajara
             return (Bitmap)documemt.SaveAsImage(0, PdfImageType.Bitmap);
         }
 
-        private PdfDocument BitmapToPdf(Bitmap bitmap)
-        {
-            PdfDocument document = new PdfDocument();
-            var page = document.Pages.Add();
-            page.Canvas.DrawImage(PdfImage.FromImage(bitmap), new PointF(0, 0), bitmap.Size);
-            return document;
-        }
+        //private PdfDocument BitmapToPdf(Bitmap bitmap)
+        //{
+        //    PdfDocument document = new PdfDocument();
+        //    var page = document.Pages.Add();
+        //    page.Canvas.DrawImage(PdfImage.FromImage(bitmap), new PointF(0, 0), bitmap.Size);
+        //    return document;
+        //}
 
         private void Save(string pdfDestinationPath, Bitmap img)
         {
@@ -131,9 +151,6 @@ namespace GeradorFolhaPontoTabajara
 
             this.DoBeforePreencherTabelaHorarios(args, info);
 
-
-            int[] SCoresMarcacaoTabela = { -13553359, -16316665, -16579837, -16777216 };
-
             int indexLinha = 0;
 
             foreach (int linha in linhasConteudo)
@@ -153,6 +170,7 @@ namespace GeradorFolhaPontoTabajara
         private void PreencherData(GeradorArgs args, Bitmap bmpFolhaPonto)
         {
             //recortar periodo
+            var pathImagem = GetPastaImagemAleatoria();
 
             var imgData = bmpFolhaPonto.Clone(new Rectangle(509, 68, 46, 12), bmpFolhaPonto.PixelFormat);
 
@@ -162,9 +180,9 @@ namespace GeradorFolhaPontoTabajara
             {
                 if (DateTime.TryParseExact(strData.Trim(), new string[] { "dd/MM/yyyy", "d/MM/yyyy", "dd/M/yyyy", "d/M/yyyy" }, CultureInfo.CurrentCulture, DateTimeStyles.None, out DateTime date))
                 {
-                    var dia = GeradorNumeros.FromNumber(date.Day, 2);
-                    var mes = GeradorNumeros.FromNumber(date.Month, 2);
-                    var ano = GeradorNumeros.FromNumber(date.Year, 4);                   
+                    var dia = GeradorNumeros.FromNumber(pathImagem, date.Day, 2);
+                    var mes = GeradorNumeros.FromNumber(pathImagem, date.Month, 2);
+                    var ano = GeradorNumeros.FromNumber(pathImagem, date.Year, 4);                   
 
                     bmpFolhaPonto.Merge(dia, new Point(76, 977), args.CorCaneta);
                     bmpFolhaPonto.Merge(mes, new Point(106, 977), args.CorCaneta);

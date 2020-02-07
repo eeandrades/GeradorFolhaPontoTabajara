@@ -95,7 +95,7 @@
             this.btnSelectFolderEntrada.Text = "...";
             this.toolTip1.SetToolTip(this.btnSelectFolderEntrada, "Selecionar Pasta");
             this.btnSelectFolderEntrada.UseVisualStyleBackColor = true;
-            this.btnSelectFolderEntrada.Click += new System.EventHandler(this.btnSelectFolder_Click);
+            this.btnSelectFolderEntrada.Click += new System.EventHandler(this.BtnSelectFolder_Click);
             // 
             // btnSelectFolderSaida
             // 
@@ -107,7 +107,7 @@
             this.btnSelectFolderSaida.Text = "...";
             this.toolTip1.SetToolTip(this.btnSelectFolderSaida, "Selecionar Pasta");
             this.btnSelectFolderSaida.UseVisualStyleBackColor = true;
-            this.btnSelectFolderSaida.Click += new System.EventHandler(this.btnSelectFolder_Click);
+            this.btnSelectFolderSaida.Click += new System.EventHandler(this.BtnSelectFolder_Click);
             // 
             // btnAbrirPastaEntrada
             // 
@@ -119,7 +119,7 @@
             this.btnAbrirPastaEntrada.Text = ">";
             this.toolTip1.SetToolTip(this.btnAbrirPastaEntrada, "Exibir Pasta");
             this.btnAbrirPastaEntrada.UseVisualStyleBackColor = true;
-            this.btnAbrirPastaEntrada.Click += new System.EventHandler(this.btnAbrirPasta_Click);
+            this.btnAbrirPastaEntrada.Click += new System.EventHandler(this.BtnAbrirPasta_Click);
             // 
             // btnAbrirPastaSaida
             // 
@@ -131,7 +131,7 @@
             this.btnAbrirPastaSaida.Text = ">";
             this.toolTip1.SetToolTip(this.btnAbrirPastaSaida, "Exibir Pasta");
             this.btnAbrirPastaSaida.UseVisualStyleBackColor = true;
-            this.btnAbrirPastaSaida.Click += new System.EventHandler(this.btnAbrirPasta_Click);
+            this.btnAbrirPastaSaida.Click += new System.EventHandler(this.BtnAbrirPasta_Click);
             // 
             // errorProvider
             // 
@@ -262,7 +262,7 @@
             this.lnkReferenciaGoogleCloudVision.Tag = "https://cloud.google.com/vision/docs/quickstart-client-libraries";
             this.lnkReferenciaGoogleCloudVision.Text = "Para o google cloud vision deverá ser criado uma autorização conforme o lik abaix" +
     "o:\r\nhttps://cloud.google.com/vision/docs/quickstart-client-libraries";
-            this.lnkReferenciaGoogleCloudVision.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkReferenciaGoogleCloudVision_LinkClicked);
+            this.lnkReferenciaGoogleCloudVision.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LnkReferenciaGoogleCloudVision_LinkClicked);
             // 
             // FrmGeradorFolhaPonto
             // 

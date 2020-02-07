@@ -12,9 +12,7 @@ namespace GeradorFolhaPontoTabajara
         const int horSpace = 2;
         const int vertSpace = 1;
 
-        private static string PathNumeros = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Padroes\1");
-
-        public static Bitmap FromNumber(int numero, int paddingLeft)
+        public static Bitmap FromNumber(string pathCaracteres, int numero, int paddingLeft)
         {
             if (numero < 0)
                 throw new InvalidCastException("O número deve ser positivo");
@@ -31,7 +29,7 @@ namespace GeradorFolhaPontoTabajara
 
             foreach (var num in arrNumeros)
             {
-                var path = System.IO.Path.Combine(PathNumeros, $"{num}.png");
+                var path = System.IO.Path.Combine(pathCaracteres, $"{num}.png");
 
                 var bmpNum = new Bitmap(path);
 
@@ -54,15 +52,13 @@ namespace GeradorFolhaPontoTabajara
             }
             return result;
         }
-
-
-
-        public static Bitmap FromTimeSpan(TimeSpan timeSpan)
+        
+        public static Bitmap FromTimeSpan(string pathCaracteres, TimeSpan timeSpan)
         {
-            var imgHora = FromNumber(timeSpan.Hours, 2);
-            var imgMinute = FromNumber(timeSpan.Minutes, 2);
+            var imgHora = FromNumber(pathCaracteres, timeSpan.Hours, 2);
+            var imgMinute = FromNumber(pathCaracteres, timeSpan.Minutes, 2);
 
-            var doisPontos = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(PathNumeros, "dois-pontos.png"));
+            var doisPontos = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(pathCaracteres, "dois-pontos.png"));
 
             var result = new Bitmap(imgHora.Width + doisPontos.Width + imgMinute.Width + horSpace *3, imgHora.Height);
 
