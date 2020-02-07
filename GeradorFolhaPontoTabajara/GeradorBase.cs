@@ -156,6 +156,7 @@ namespace GeradorFolhaPontoTabajara
             }
 
             linhasConteudos = linhasValidas;
+
             return new Info(bmpFolhaPonto, qtdDias, linhasValidas.Count);
         }
 
@@ -167,6 +168,7 @@ namespace GeradorFolhaPontoTabajara
             this.DoBeforePreencherTabelaHorarios(args, info);
 
             int indexLinha = 0;
+            Random rnd = new Random();
 
             foreach (int linha in linhasConteudo)
             {
@@ -175,8 +177,10 @@ namespace GeradorFolhaPontoTabajara
                 MesclaBitmap(bmpFolhaPonto, conteudoLinha.IntervaloInicio, new Point(SPosicaoIntervaloInicio, linha), args.CorCaneta);
                 MesclaBitmap(bmpFolhaPonto, conteudoLinha.IntervaloFim, new Point(SPosicaoIntervaloFim, linha), args.CorCaneta);
                 MesclaBitmap(bmpFolhaPonto, conteudoLinha.Fim, new Point(SPosicaoFim, linha), args.CorCaneta);
-                MesclaBitmap(bmpFolhaPonto, conteudoLinha.Assinatura, new Point(SPosicaoAssinatura, linha), args.CorCaneta);
+                MesclaBitmap(bmpFolhaPonto, conteudoLinha.Assinatura, new Point(rnd.Next(SPosicaoAssinatura - 10, SPosicaoAssinatura + 10), linha), args.CorCaneta);
             }
+
+            
             this.DoAfterPreencherTabelaHorarios(args, info);
         }
 
@@ -240,6 +244,7 @@ namespace GeradorFolhaPontoTabajara
             var xCentralizado = SPosicaoAssinaturaLeft + (SPosicaoAssinaturaWidth - assinatura.Width) / 2;
             var y = GetPosicaoTopDataAssinatura(bmpFolhaPonto) - assinatura.Height;
             bmpFolhaPonto.Merge(assinatura, new Point(xCentralizado + delta.X, y + delta.Y), args.CorCaneta);
+            AddNoise(bmpFolhaPonto, new Random().Next(40,80));
         }
 
 
@@ -250,6 +255,30 @@ namespace GeradorFolhaPontoTabajara
             this.PreencherData(args, img);
             this.PreencherAssinatura(args, img);
             this.Save(args.PdfDestinationPath, img);
+        }
+        public static Bitmap AddNoise(Bitmap OriginalImage, int Amount)
+        {
+            Random TempRandom = new Random();
+            for (int x = 0; x < OriginalImage.Width; ++x)
+            {
+                for (int y = 0; y < OriginalImage.Height; ++y)
+                {
+                    Color CurrentPixel = OriginalImage.GetPixel(x,y);
+                    int R = CurrentPixel.R + TempRandom.Next(-Amount, Amount + 1);
+                    int G = CurrentPixel.G + TempRandom.Next(-Amount, Amount + 1);
+                    int B = CurrentPixel.B + TempRandom.Next(-Amount, Amount + 1);
+                    R = R > 255 ? 255 : R;
+                    R = R < 0 ? 0 : R;
+                    G = G > 255 ? 255 : G;
+                    G = G < 0 ? 0 : G;
+                    B = B > 255 ? 255 : B;
+                    B = B < 0 ? 0 : B;
+                    Color TempValue = Color.FromArgb(R, G, B);
+                    OriginalImage.SetPixel(x, y, TempValue);
+                }
+            }
+
+            return OriginalImage;
         }
     }
 }

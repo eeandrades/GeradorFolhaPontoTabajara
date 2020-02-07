@@ -12,6 +12,10 @@ namespace GeradorFolhaPontoTabajara
         const int horSpace = 2;
         const int vertSpace = 1;
 
+        private static string PathNumeros = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Padroes\");
+        private static readonly Random SRandom = new Random(100);
+        private static int NumeroPastas = System.IO.Directory.GetDirectories(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Padroes")).Length;
+
         public static Bitmap FromNumber(string pathCaracteres, int numero, int paddingLeft)
         {
             if (numero < 0)
@@ -30,6 +34,7 @@ namespace GeradorFolhaPontoTabajara
             foreach (var num in arrNumeros)
             {
                 var path = System.IO.Path.Combine(pathCaracteres, $"{num}.png");
+                var indexPasta = SRandom.Next(1, NumeroPastas);
 
                 var bmpNum = new Bitmap(path);
 
