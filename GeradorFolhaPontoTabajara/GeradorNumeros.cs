@@ -12,7 +12,9 @@ namespace GeradorFolhaPontoTabajara
         const int horSpace = 2;
         const int vertSpace = 1;
 
-        private static string PathNumeros = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Padroes\1");
+        private static string PathNumeros = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Padroes\");
+        private static readonly Random SRandom = new Random(100);
+        private static int NumeroPastas = System.IO.Directory.GetDirectories(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Padroes")).Length;
 
         public static Bitmap FromNumber(int numero, int paddingLeft)
         {
@@ -31,7 +33,9 @@ namespace GeradorFolhaPontoTabajara
 
             foreach (var num in arrNumeros)
             {
-                var path = System.IO.Path.Combine(PathNumeros, $"{num}.png");
+                var indexPasta = SRandom.Next(1, NumeroPastas);
+
+                var path = System.IO.Path.Combine(PathNumeros+ indexPasta, $"{num}.png");
 
                 var bmpNum = new Bitmap(path);
 
@@ -62,7 +66,7 @@ namespace GeradorFolhaPontoTabajara
             var imgHora = FromNumber(timeSpan.Hours, 2);
             var imgMinute = FromNumber(timeSpan.Minutes, 2);
 
-            var doisPontos = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(PathNumeros, "dois-pontos.png"));
+            var doisPontos = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(PathNumeros+"1", "dois-pontos.png"));
 
             var result = new Bitmap(imgHora.Width + doisPontos.Width + imgMinute.Width + horSpace *3, imgHora.Height);
 
