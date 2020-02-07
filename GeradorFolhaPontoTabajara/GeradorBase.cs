@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -149,12 +150,40 @@ namespace GeradorFolhaPontoTabajara
 
         protected abstract Padrao DoGetConteudoLinha(GeradorArgs args, Info info, int numeroLinha);
 
+        private void PreencherData(GeradorArgs args, Bitmap bmpFolhaPonto)
+        {
+            //recortar periodo
+
+            var imgData = bmpFolhaPonto.Clone(new Rectangle(509, 68, 46, 12), bmpFolhaPonto.PixelFormat);
+
+            var strData = args.Ocr.ConvertImageToText(imgData).FirstOrDefault();
+
+            if (!string.IsNullOrWhiteSpace(strData))
+            {
+                if (DateTime.TryParseExact(strData.Trim(), new string[] { "dd/MM/yyyy", "d/MM/yyyy", "dd/M/yyyy", "d/M/yyyy" }, CultureInfo.CurrentCulture, DateTimeStyles.None, out DateTime date))
+                {
+                    var dia = GeradorNumeros.FromNumber(date.Day, 2);
+                    var mes = GeradorNumeros.FromNumber(date.Month, 2);
+                    var ano = GeradorNumeros.FromNumber(date.Year, 4);                   
+
+                    bmpFolhaPonto.Merge(dia, new Point(76, 977), args.CorCaneta);
+                    bmpFolhaPonto.Merge(mes, new Point(106, 977), args.CorCaneta);
+                    bmpFolhaPonto.Merge(ano, new Point(136, 977), args.CorCaneta);
+
+                }
+                else
+                    throw new ArgumentException($"Erro ao obter data do documento. Data inválida. {strData}");
+
+            }
+        }
+
 
         void IGerador.Execute(GeradorArgs args)
         {
             var img = PdfToBitmap(args.PdfSourcePath);
-            PreencherTabelaHorarios(args, img);
-            Save(args.PdfDestinationPath, img);
+            this.PreencherTabelaHorarios(args, img);
+            this.PreencherData(args, img);
+            this.Save(args.PdfDestinationPath, img);
         }
     }
 }

@@ -50,6 +50,9 @@
             this.txbAtrasoMinimo = new System.Windows.Forms.TextBox();
             this.txbPastaSaida = new System.Windows.Forms.TextBox();
             this.txbPastaEntrada = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbbOcrs = new System.Windows.Forms.ComboBox();
+            this.lnkReferenciaGoogleCloudVision = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.successProvider)).BeginInit();
             this.SuspendLayout();
@@ -74,7 +77,7 @@
             // 
             // btnGerar
             // 
-            this.btnGerar.Location = new System.Drawing.Point(476, 229);
+            this.btnGerar.Location = new System.Drawing.Point(476, 282);
             this.btnGerar.Name = "btnGerar";
             this.btnGerar.Size = new System.Drawing.Size(75, 23);
             this.btnGerar.TabIndex = 2;
@@ -230,12 +233,45 @@
             this.txbPastaEntrada.TabIndex = 0;
             this.txbPastaEntrada.Text = global::GeradorFolhaPontoTabajara.Properties.Settings.Default.pathEntrada;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(28, 221);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(196, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "OCR para detecção do periodo da folha";
+            // 
+            // cbbOcrs
+            // 
+            this.cbbOcrs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbOcrs.FormattingEnabled = true;
+            this.cbbOcrs.Location = new System.Drawing.Point(30, 237);
+            this.cbbOcrs.Name = "cbbOcrs";
+            this.cbbOcrs.Size = new System.Drawing.Size(516, 21);
+            this.cbbOcrs.TabIndex = 4;
+            // 
+            // lnkReferenciaGoogleCloudVision
+            // 
+            this.lnkReferenciaGoogleCloudVision.AutoSize = true;
+            this.lnkReferenciaGoogleCloudVision.Location = new System.Drawing.Point(29, 261);
+            this.lnkReferenciaGoogleCloudVision.Name = "lnkReferenciaGoogleCloudVision";
+            this.lnkReferenciaGoogleCloudVision.Size = new System.Drawing.Size(404, 26);
+            this.lnkReferenciaGoogleCloudVision.TabIndex = 6;
+            this.lnkReferenciaGoogleCloudVision.TabStop = true;
+            this.lnkReferenciaGoogleCloudVision.Tag = "https://cloud.google.com/vision/docs/quickstart-client-libraries";
+            this.lnkReferenciaGoogleCloudVision.Text = "Para o google cloud vision deverá ser criado uma autorização conforme o lik abaix" +
+    "o:\r\nhttps://cloud.google.com/vision/docs/quickstart-client-libraries";
+            this.lnkReferenciaGoogleCloudVision.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkReferenciaGoogleCloudVision_LinkClicked);
+            // 
             // FrmGeradorFolhaPonto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(558, 265);
+            this.ClientSize = new System.Drawing.Size(558, 317);
+            this.Controls.Add(this.lnkReferenciaGoogleCloudVision);
             this.Controls.Add(this.cbbCorCaneta);
+            this.Controls.Add(this.cbbOcrs);
             this.Controls.Add(this.cbbImplementacao);
             this.Controls.Add(this.btnAbrirPastaSaida);
             this.Controls.Add(this.btnSelectFolderSaida);
@@ -246,6 +282,7 @@
             this.Controls.Add(this.txbAtrasoMinimo);
             this.Controls.Add(this.txbPastaSaida);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
@@ -285,6 +322,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.LinkLabel lnkReferenciaGoogleCloudVision;
+        private System.Windows.Forms.ComboBox cbbOcrs;
+        private System.Windows.Forms.Label label5;
     }
 }
 
