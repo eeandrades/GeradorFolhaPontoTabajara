@@ -184,8 +184,8 @@ namespace GeradorFolhaPontoTabajara
 
         private static int GetPosicaoTopDataAssinatura(Bitmap bmpFolhaPonto)
         {
-            int y = bmpFolhaPonto.Height-1;
-            while(true)
+            int y = bmpFolhaPonto.Height - 1;
+            while (true)
             {
                 var pixel = bmpFolhaPonto.GetPixel(SPosicaoInicio, y);
                 if (pixel.ToArgb() != -1 || y == 100)
@@ -195,7 +195,7 @@ namespace GeradorFolhaPontoTabajara
 
             return y - 23;
         }
-        
+
 
         private void PreencherData(GeradorArgs args, Bitmap bmpFolhaPonto)
         {
@@ -224,23 +224,22 @@ namespace GeradorFolhaPontoTabajara
             }
         }
 
+        private Bitmap GetAssinatura()
+        {
+            var pathImagem = GetPastaImagemAleatoria();
+            return System.IO.File.Exists(System.IO.Path.Combine(pathImagem, "assinatura-completa.png")) ?
+                new Bitmap(System.IO.Path.Combine(pathImagem, "assinatura-completa.png")) :
+                new Bitmap(System.IO.Path.Combine(pathImagem, "assinatura.png"));
+        }
+
         private void PreencherAssinatura(GeradorArgs args, Bitmap bmpFolhaPonto)
         {
-
             var delta = GeraVariacaoPosicaoAleatoria(-20, -5, 20, 0);
-
             delta.Y = -5;
-
-            var pathImagem = GetPastaImagemAleatoria();
-
-            var assinatura = new Bitmap(System.IO.Path.Combine(pathImagem, "assinatura.png"));
-
-
+            var assinatura = this.GetAssinatura();
             var xCentralizado = SPosicaoAssinaturaLeft + (SPosicaoAssinaturaWidth - assinatura.Width) / 2;
             var y = GetPosicaoTopDataAssinatura(bmpFolhaPonto) - assinatura.Height;
-
             bmpFolhaPonto.Merge(assinatura, new Point(xCentralizado + delta.X, y + delta.Y), args.CorCaneta);
-
         }
 
 

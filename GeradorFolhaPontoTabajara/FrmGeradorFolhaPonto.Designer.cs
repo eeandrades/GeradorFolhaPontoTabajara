@@ -302,6 +302,7 @@
             this.Controls.Add(this.lblPastaSaida);
             this.Controls.Add(this.txbPastaEntrada);
             this.Controls.Add(this.lblPastaEntrada);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "FrmGeradorFolhaPonto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
