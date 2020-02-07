@@ -9,8 +9,8 @@ namespace GeradorFolhaPontoTabajara
 {
     public struct Atraso
         {
-        int MaximoMinutos { get; }
-        int MinimoMinutos { get; }
+        public int MaximoMinutos { get; }
+        public int MinimoMinutos { get; }
 
         public Atraso(int minimoMinutos, int maximoMinutos)
         {
