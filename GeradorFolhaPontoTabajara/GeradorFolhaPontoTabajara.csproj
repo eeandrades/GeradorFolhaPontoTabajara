@@ -412,6 +412,7 @@
     <Content Include="Padroes\5\IntInicio.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\logo.jpg" />
     <None Include="Resources\error-icon.png" />
     <None Include="Resources\success-icon.png" />
   </ItemGroup>

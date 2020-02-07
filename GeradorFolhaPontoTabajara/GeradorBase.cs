@@ -19,6 +19,14 @@ namespace GeradorFolhaPontoTabajara
         const int SPosicaoIntervaloFim = 258;
         const int SPosicaoFim = 316;
         const int SPosicaoAssinatura = 625;
+        private const int SPosicaoTopData = 995;
+        private const int SPosicaoLeftDataDia = 76;
+        private const int SPosicaoLeftDataMes = 106;
+        private const int SPosicaoLeftDataAno = 136;
+
+        const int SPosicaoAssinaturaTop = 62;
+        const int SPosicaoAssinaturaLeft = 400;
+        const int SPosicaoAssinaturaWidth = 270;
 
         protected string[] PastasImagens { get; }
 
@@ -69,12 +77,19 @@ namespace GeradorFolhaPontoTabajara
 
         private static readonly Random SRandom = new Random(100);
 
-        private static Point GeraVariacaoPosicaoAleatoria()
+        private static Point GeraVariacaoPosicaoAleatoria(int minX, int minY, int maxX, int maxY)
         {
             return new Point(
-                SRandom.Next(0, 4),
-                SRandom.Next(0, 5));
+                SRandom.Next(minX, maxX),
+                SRandom.Next(minY, maxY));
         }
+
+        private static Point GeraVariacaoPosicaoAleatoria()
+        {
+            return GeraVariacaoPosicaoAleatoria(0, 0, 4, 5);
+        }
+
+
 
         private void MesclaBitmap(Bitmap bmp, Bitmap part, Point start, Color corCaneta)
         {
@@ -167,12 +182,26 @@ namespace GeradorFolhaPontoTabajara
 
         protected abstract Padrao DoGetConteudoLinha(GeradorArgs args, Info info, int numeroLinha);
 
+        private static int GetPosicaoTopDataAssinatura(Bitmap bmpFolhaPonto)
+        {
+            int y = bmpFolhaPonto.Height-1;
+            while(true)
+            {
+                var pixel = bmpFolhaPonto.GetPixel(SPosicaoInicio, y);
+                if (pixel.ToArgb() != -1 || y == 100)
+                    break;
+                y--;
+            }
+
+            return y - 23;
+        }
+        
+
         private void PreencherData(GeradorArgs args, Bitmap bmpFolhaPonto)
         {
-            //recortar periodo
+            var delta = GeraVariacaoPosicaoAleatoria(0, -3, 2, 1);
             var pathImagem = GetPastaImagemAleatoria();
-
-            var imgData = bmpFolhaPonto.Clone(new Rectangle(509, 68, 46, 12), bmpFolhaPonto.PixelFormat);
+            var imgData = bmpFolhaPonto.Clone(new Rectangle(509, 68, 60, 12), bmpFolhaPonto.PixelFormat);
 
             var strData = args.Ocr.ConvertImageToText(imgData).FirstOrDefault();
 
@@ -182,17 +211,36 @@ namespace GeradorFolhaPontoTabajara
                 {
                     var dia = GeradorNumeros.FromNumber(pathImagem, date.Day, 2);
                     var mes = GeradorNumeros.FromNumber(pathImagem, date.Month, 2);
-                    var ano = GeradorNumeros.FromNumber(pathImagem, date.Year, 4);                   
+                    var ano = GeradorNumeros.FromNumber(pathImagem, date.Year, 4);
 
-                    bmpFolhaPonto.Merge(dia, new Point(76, 977), args.CorCaneta);
-                    bmpFolhaPonto.Merge(mes, new Point(106, 977), args.CorCaneta);
-                    bmpFolhaPonto.Merge(ano, new Point(136, 977), args.CorCaneta);
+                    var y = GetPosicaoTopDataAssinatura(bmpFolhaPonto) - dia.Height + delta.Y;
 
+                    bmpFolhaPonto.Merge(dia, new Point(SPosicaoLeftDataDia + delta.X, y), args.CorCaneta);
+                    bmpFolhaPonto.Merge(mes, new Point(SPosicaoLeftDataMes + delta.X, y), args.CorCaneta);
+                    bmpFolhaPonto.Merge(ano, new Point(SPosicaoLeftDataAno + delta.X, y), args.CorCaneta);
                 }
                 else
                     throw new ArgumentException($"Erro ao obter data do documento. Data inválida. {strData}");
-
             }
+        }
+
+        private void PreencherAssinatura(GeradorArgs args, Bitmap bmpFolhaPonto)
+        {
+
+            var delta = GeraVariacaoPosicaoAleatoria(-20, -5, 20, 0);
+
+            delta.Y = -5;
+
+            var pathImagem = GetPastaImagemAleatoria();
+
+            var assinatura = new Bitmap(System.IO.Path.Combine(pathImagem, "assinatura.png"));
+
+
+            var xCentralizado = SPosicaoAssinaturaLeft + (SPosicaoAssinaturaWidth - assinatura.Width) / 2;
+            var y = GetPosicaoTopDataAssinatura(bmpFolhaPonto) - assinatura.Height;
+
+            bmpFolhaPonto.Merge(assinatura, new Point(xCentralizado + delta.X, y + delta.Y), args.CorCaneta);
+
         }
 
 
@@ -201,6 +249,7 @@ namespace GeradorFolhaPontoTabajara
             var img = PdfToBitmap(args.PdfSourcePath);
             this.PreencherTabelaHorarios(args, img);
             this.PreencherData(args, img);
+            this.PreencherAssinatura(args, img);
             this.Save(args.PdfDestinationPath, img);
         }
     }
