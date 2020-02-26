@@ -120,6 +120,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitmapExtension.cs" />
+    <Compile Include="DetectorPeriodo\DetectorPeriodoFolhaNomeArquivo.cs" />
+    <Compile Include="DetectorPeriodo\DetectorPeriodoFolhaOcr.cs" />
     <Compile Include="GeradorArgs.cs" />
     <Compile Include="GeradorFactory.cs" />
     <Compile Include="FrmGeradorFolhaPonto.cs">
@@ -134,11 +136,14 @@
     <Compile Include="GeradorPadroes.cs" />
     <Compile Include="GeradorController.cs" />
     <Compile Include="GeradorNumeros.cs" />
+    <Compile Include="ICalendario.cs" />
+    <Compile Include="DetectorPeriodo\IDetectorPeriodoFolha.cs" />
     <Compile Include="IGerador.cs" />
     <Compile Include="Info.cs" />
-    <Compile Include="IOcr.cs" />
-    <Compile Include="OcrEmpty.cs" />
-    <Compile Include="OcrFactory.cs" />
+    <Compile Include="Ocr\IOcr.cs" />
+    <Compile Include="Ocr\OcrEmpty.cs" />
+    <Compile Include="DetectorPeriodo\DetectorPeriodoFolhaFactory.cs" />
+    <Compile Include="Ocr\OcrFactory.cs" />
     <Compile Include="OcrGoogleCloudVision.cs" />
     <Compile Include="Padrao.cs" />
     <Compile Include="Program.cs" />

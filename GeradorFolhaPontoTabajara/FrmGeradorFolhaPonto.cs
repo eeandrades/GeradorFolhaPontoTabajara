@@ -41,7 +41,7 @@ namespace GeradorFolhaPontoTabajara
 
             this.cbbCorCaneta.DataSource = SCoresCaneta;
 
-            this.cbbOcrs.DataSource = this._controller.ListarOcrs();
+            this.cbbDetectorPeriodo.DataSource = this._controller.ListarDetectoresPeriodo();
 
         }
 
@@ -90,12 +90,12 @@ namespace GeradorFolhaPontoTabajara
 
         private GeradorArgs CreateArgs()
         {
-            var ocr = this._controller.CriarOcr((Type)this.cbbOcrs.SelectedItem);
+            var detector = this._controller.CriarDetectorPeriodo((Type)this.cbbDetectorPeriodo.SelectedItem);
 
             return new GeradorArgs(
                 (Color)this.cbbCorCaneta.SelectedItem,
                 new Atraso(Convert.ToInt32(this.txbAtrasoMinimo.Text), Convert.ToInt32(this.txbAtrasoMaximo.Text)),
-                ocr,
+                detector,
                 this.txbPastaEntrada.Text,
                 this.txbPastaSaida.Text);
         }

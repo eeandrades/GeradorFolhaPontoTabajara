@@ -51,7 +51,7 @@
             this.txbPastaSaida = new System.Windows.Forms.TextBox();
             this.txbPastaEntrada = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.cbbOcrs = new System.Windows.Forms.ComboBox();
+            this.cbbDetectorPeriodo = new System.Windows.Forms.ComboBox();
             this.lnkReferenciaGoogleCloudVision = new System.Windows.Forms.LinkLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -240,18 +240,18 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(362, 210);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(196, 13);
+            this.label5.Size = new System.Drawing.Size(161, 13);
             this.label5.TabIndex = 0;
-            this.label5.Text = "OCR para detecção do periodo da folha";
+            this.label5.Text = "Modo para detecção do período";
             // 
-            // cbbOcrs
+            // cbbDetectorPeriodo
             // 
-            this.cbbOcrs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbOcrs.FormattingEnabled = true;
-            this.cbbOcrs.Location = new System.Drawing.Point(364, 226);
-            this.cbbOcrs.Name = "cbbOcrs";
-            this.cbbOcrs.Size = new System.Drawing.Size(516, 21);
-            this.cbbOcrs.TabIndex = 4;
+            this.cbbDetectorPeriodo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbDetectorPeriodo.FormattingEnabled = true;
+            this.cbbDetectorPeriodo.Location = new System.Drawing.Point(364, 226);
+            this.cbbDetectorPeriodo.Name = "cbbDetectorPeriodo";
+            this.cbbDetectorPeriodo.Size = new System.Drawing.Size(516, 21);
+            this.cbbDetectorPeriodo.TabIndex = 4;
             // 
             // lnkReferenciaGoogleCloudVision
             // 
@@ -284,7 +284,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lnkReferenciaGoogleCloudVision);
             this.Controls.Add(this.cbbCorCaneta);
-            this.Controls.Add(this.cbbOcrs);
+            this.Controls.Add(this.cbbDetectorPeriodo);
             this.Controls.Add(this.cbbImplementacao);
             this.Controls.Add(this.btnAbrirPastaSaida);
             this.Controls.Add(this.btnSelectFolderSaida);
@@ -338,7 +338,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.LinkLabel lnkReferenciaGoogleCloudVision;
-        private System.Windows.Forms.ComboBox cbbOcrs;
+        private System.Windows.Forms.ComboBox cbbDetectorPeriodo;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
     }
