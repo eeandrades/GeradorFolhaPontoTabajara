@@ -3,11 +3,8 @@ using Spire.Pdf.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Globalization;
+using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GeradorFolhaPontoTabajara
 {
@@ -87,7 +84,7 @@ namespace GeradorFolhaPontoTabajara
 
         private static Point GeraVariacaoPosicaoAleatoria()
         {
-            return GeraVariacaoPosicaoAleatoria(0, 0, 4, 5);
+            return GeraVariacaoPosicaoAleatoria(0, 0, 1, 1);
         }
 
 
@@ -176,11 +173,11 @@ namespace GeradorFolhaPontoTabajara
             foreach (int linha in linhasConteudo)
             {
                 var conteudoLinha = this.DoGetConteudoLinha(args, info, indexLinha++);
-                MesclaBitmap(bmpFolhaPonto, conteudoLinha.Inicio, new Point(SPosicaoInicio, linha), args.CorCaneta);
-                MesclaBitmap(bmpFolhaPonto, conteudoLinha.IntervaloInicio, new Point(SPosicaoIntervaloInicio, linha), args.CorCaneta);
-                MesclaBitmap(bmpFolhaPonto, conteudoLinha.IntervaloFim, new Point(SPosicaoIntervaloFim, linha), args.CorCaneta);
-                MesclaBitmap(bmpFolhaPonto, conteudoLinha.Fim, new Point(SPosicaoFim, linha), args.CorCaneta);
-                MesclaBitmap(bmpFolhaPonto, conteudoLinha.Assinatura, new Point(rnd.Next(SPosicaoAssinatura - 10, SPosicaoAssinatura + 10), linha), args.CorCaneta);
+                MesclaBitmap(bmpFolhaPonto, conteudoLinha.Inicio, new Point(SPosicaoInicio, linha + 1), args.CorCaneta);
+                MesclaBitmap(bmpFolhaPonto, conteudoLinha.IntervaloInicio, new Point(SPosicaoIntervaloInicio, linha + 1), args.CorCaneta);
+                MesclaBitmap(bmpFolhaPonto, conteudoLinha.IntervaloFim, new Point(SPosicaoIntervaloFim, linha + 1), args.CorCaneta);
+                MesclaBitmap(bmpFolhaPonto, conteudoLinha.Fim, new Point(SPosicaoFim, linha + 1), args.CorCaneta);
+                MesclaBitmap(bmpFolhaPonto, conteudoLinha.Assinatura, new Point(rnd.Next(SPosicaoAssinatura - 5, SPosicaoAssinatura + 5) - 35, linha - 4), args.CorCaneta);
             }
 
 
@@ -234,7 +231,7 @@ namespace GeradorFolhaPontoTabajara
                 new Bitmap(System.IO.Path.Combine(pathImagem, "assinatura.png"));
         }
 
-        private void PreencherAssinatura(GeradorArgs args, Bitmap bmpFolhaPonto)
+        private Bitmap PreencherAssinatura(GeradorArgs args, Bitmap bmpFolhaPonto)
         {
             var delta = GeraVariacaoPosicaoAleatoria(-20, -5, 20, 0);
             delta.Y = -5;
@@ -242,7 +239,8 @@ namespace GeradorFolhaPontoTabajara
             var xCentralizado = SPosicaoAssinaturaLeft + (SPosicaoAssinaturaWidth - assinatura.Width) / 2;
             var y = GetPosicaoTopDataAssinatura(bmpFolhaPonto) - assinatura.Height;
             bmpFolhaPonto.Merge(assinatura, new Point(xCentralizado + delta.X, y + delta.Y), args.CorCaneta);
-            AddNoise(bmpFolhaPonto, new Random().Next(20, 30));
+            AddNoise(bmpFolhaPonto, new Random().Next(10, 40));
+            return RotateBitmap2(bmpFolhaPonto, new Random().Next(-3, 3));
         }
 
         public static Bitmap AddNoise(Bitmap OriginalImage, int Amount)
@@ -252,6 +250,7 @@ namespace GeradorFolhaPontoTabajara
             {
                 for (int y = 0; y < OriginalImage.Height; ++y)
                 {
+                    Amount = new Random().Next(10, 40);
                     Color CurrentPixel = OriginalImage.GetPixel(x, y);
                     int R = CurrentPixel.R + TempRandom.Next(-Amount, Amount + 1);
                     int G = CurrentPixel.G + TempRandom.Next(-Amount, Amount + 1);
@@ -266,17 +265,91 @@ namespace GeradorFolhaPontoTabajara
                     OriginalImage.SetPixel(x, y, TempValue);
                 }
             }
-
             return OriginalImage;
         }
 
+
+        private Bitmap RotateBitmap2(Bitmap bm, float angle)
+        {
+            angle = angle / 3;
+            // Make a Matrix to represent rotation
+            // by this angle.
+            Matrix rotate_at_origin = new Matrix();
+            rotate_at_origin.Rotate(angle);
+
+            // Rotate the image's corners to see how big
+            // it will be after rotation.
+            PointF[] points =
+            {
+        new PointF(0, 0),
+        new PointF(bm.Width, 0),
+        new PointF(bm.Width, bm.Height),
+        new PointF(0, bm.Height),
+    };
+            rotate_at_origin.TransformPoints(points);
+            float xmin, xmax, ymin, ymax;
+            GetPointBounds(points, out xmin, out xmax,
+                out ymin, out ymax);
+
+            // Make a bitmap to hold the rotated result.
+            int wid = (int)Math.Round(xmax - xmin);
+            int hgt = (int)Math.Round(ymax - ymin);
+
+            Bitmap result = new Bitmap(wid, hgt);
+
+            // Create the real rotation transformation.
+            Matrix rotate_at_center = new Matrix();
+            rotate_at_center.RotateAt(angle,
+                new PointF(wid / 2f, hgt / 2f));
+
+            // Draw the image onto the new bitmap rotated.
+            using (Graphics gr = Graphics.FromImage(result))
+            {
+                // Use smooth image interpolation.
+                gr.InterpolationMode = InterpolationMode.High;
+
+                // Clear with the color in the image's upper left corner.
+                gr.Clear(Color.White);
+
+                //// For debugging. (It's easier to see the background.)
+                //gr.Clear(Color.LightBlue);
+
+                // Set up the transformation to rotate.
+                gr.Transform = rotate_at_center;
+
+                // Draw the image centered on the bitmap.
+                int x = (wid - bm.Width) / 2;
+                int y = (hgt - bm.Height) / 2;
+                gr.DrawImage(bm, x, y);
+            }
+
+            // Return the result bitmap.
+            return result;
+        }
+
+        private void GetPointBounds(PointF[] points,
+    out float xmin, out float xmax,
+    out float ymin, out float ymax)
+        {
+            xmin = points[0].X;
+            xmax = xmin;
+            ymin = points[0].Y;
+            ymax = ymin;
+            foreach (PointF point in points)
+            {
+                if (xmin > point.X) xmin = point.X;
+                if (xmax < point.X) xmax = point.X;
+                if (ymin > point.Y) ymin = point.Y;
+                if (ymax < point.Y) ymax = point.Y;
+            }
+        }
 
         void IGerador.Execute(GeradorArgs args)
         {
             var img = PdfToBitmap(args.PdfSourcePath);
             var info = this.PreencherTabelaHorarios(args, img);
             this.PreencherData(args, info, img);
-            this.PreencherAssinatura(args, img);
+            img = this.PreencherAssinatura(args, img);
             this.Save(args.PdfDestinationPath, img);
         }
     }

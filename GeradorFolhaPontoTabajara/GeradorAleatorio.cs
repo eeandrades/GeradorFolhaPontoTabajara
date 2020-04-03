@@ -62,6 +62,7 @@ namespace GeradorFolhaPontoTabajara
             int variacaoMax = args.MargemAtraso.MaximoMinutos;
             for (int dia = 1; dia <= 31; dia++)
             {
+                pathPadrao = base.GetPastaImagemAleatoria();
                 result.Add(new Padrao()
                 {
                     Inicio = GeradorNumeros.FromTimeSpan(pathPadrao, GerarTimespanAleatorio(9, variacaoMin, variacaoMax, true)),

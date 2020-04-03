@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GeradorFolhaPontoTabajara
@@ -14,7 +9,7 @@ namespace GeradorFolhaPontoTabajara
     {
         private readonly GeradorController _controller = new GeradorController();
 
-        private static readonly Color[] SCoresCaneta = { Color.Black, Color.Blue, Color.Red, Color.DarkGray, Color.Green };
+        private static readonly Color[] SCoresCaneta = { Color.Black, Color.Blue, Color.Red, Color.DarkGray, Color.Green, Color.DimGray };
         public FrmGeradorFolhaPonto()
         {
             InitializeComponent();
