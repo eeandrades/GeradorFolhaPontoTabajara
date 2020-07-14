@@ -63,7 +63,7 @@ namespace GeradorFolhaPontoTabajara
             var imgHora = FromNumber(pathCaracteres, timeSpan.Hours, 2);
             var imgMinute = FromNumber(pathCaracteres, timeSpan.Minutes, 2);
 
-            var doisPontos = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(pathCaracteres, "dois-pontos.png"));
+            var doisPontos = BitmapHelper.LoadIfExists(System.IO.Path.Combine(pathCaracteres, "dois-pontos.png"));
 
             var result = new Bitmap(imgHora.Width + doisPontos.Width + imgMinute.Width + horSpace *3, imgHora.Height);
 

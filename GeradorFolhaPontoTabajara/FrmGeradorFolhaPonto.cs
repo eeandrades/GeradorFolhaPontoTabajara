@@ -96,6 +96,7 @@ namespace GeradorFolhaPontoTabajara
                 (Color)this.cbbCorCaneta.SelectedItem,
                 new Atraso(Convert.ToInt32(this.txbAtrasoMinimo.Text), Convert.ToInt32(this.txbAtrasoMaximo.Text)),
                 detector,
+                this.ckbAssinar.Checked,
                 this.txbPastaEntrada.Text,
                 this.txbPastaSaida.Text);
         }

@@ -3,11 +3,7 @@ using Spire.Pdf.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GeradorFolhaPontoTabajara
 {
@@ -31,7 +27,7 @@ namespace GeradorFolhaPontoTabajara
         protected string[] PastasImagens { get; }
 
 
-        public GeradorBase()
+        protected GeradorBase()
         {
             var pastaPadroes = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Padroes");
             this.PastasImagens = System.IO.Directory.GetDirectories(pastaPadroes);
@@ -180,7 +176,8 @@ namespace GeradorFolhaPontoTabajara
                 MesclaBitmap(bmpFolhaPonto, conteudoLinha.IntervaloInicio, new Point(SPosicaoIntervaloInicio, linha), args.CorCaneta);
                 MesclaBitmap(bmpFolhaPonto, conteudoLinha.IntervaloFim, new Point(SPosicaoIntervaloFim, linha), args.CorCaneta);
                 MesclaBitmap(bmpFolhaPonto, conteudoLinha.Fim, new Point(SPosicaoFim, linha), args.CorCaneta);
-                MesclaBitmap(bmpFolhaPonto, conteudoLinha.Assinatura, new Point(rnd.Next(SPosicaoAssinatura - 10, SPosicaoAssinatura + 10), linha), args.CorCaneta);
+                if (args.Assinar)
+                    MesclaBitmap(bmpFolhaPonto, conteudoLinha.Assinatura, new Point(rnd.Next(SPosicaoAssinatura - 10, SPosicaoAssinatura + 10), linha), args.CorCaneta);
             }
 
 
@@ -230,8 +227,8 @@ namespace GeradorFolhaPontoTabajara
         {
             var pathImagem = GetPastaImagemAleatoria();
             return System.IO.File.Exists(System.IO.Path.Combine(pathImagem, "assinatura-completa.png")) ?
-                new Bitmap(System.IO.Path.Combine(pathImagem, "assinatura-completa.png")) :
-                new Bitmap(System.IO.Path.Combine(pathImagem, "assinatura.png"));
+                BitmapHelper.LoadIfExists(System.IO.Path.Combine(pathImagem, "assinatura-completa.png")) :
+                BitmapHelper.LoadIfExists(System.IO.Path.Combine(pathImagem, "assinatura.png"));
         }
 
         private void PreencherAssinatura(GeradorArgs args, Bitmap bmpFolhaPonto)
@@ -276,7 +273,8 @@ namespace GeradorFolhaPontoTabajara
             var img = PdfToBitmap(args.PdfSourcePath);
             var info = this.PreencherTabelaHorarios(args, img);
             this.PreencherData(args, info, img);
-            this.PreencherAssinatura(args, img);
+            if (args.Assinar)
+                this.PreencherAssinatura(args, img);
             this.Save(args.PdfDestinationPath, img);
         }
     }

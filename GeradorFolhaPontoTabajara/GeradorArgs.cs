@@ -20,15 +20,17 @@ namespace GeradorFolhaPontoTabajara
     }
     public class GeradorArgs
     {
-        public GeradorArgs(Color corCaneta, Atraso margemAtraso, IDetectorPeriodoFolha detectorPeriodo, string pdfSourcePath, string pdfDestinationPath)
+        public GeradorArgs(Color corCaneta, Atraso margemAtraso, IDetectorPeriodoFolha detectorPeriodo, bool assinar, string pdfSourcePath, string pdfDestinationPath)
         {
-            CorCaneta = corCaneta;
-            MargemAtraso = margemAtraso;
-            DetectorPeriodo = detectorPeriodo ?? throw new ArgumentNullException(nameof(detectorPeriodo));
-            PdfSourcePath = pdfSourcePath;
-            PdfDestinationPath = pdfDestinationPath;
+            this.CorCaneta = corCaneta;
+            this.MargemAtraso = margemAtraso;
+            this.DetectorPeriodo = detectorPeriodo ?? throw new ArgumentNullException(nameof(detectorPeriodo));
+            this.PdfSourcePath = pdfSourcePath;
+            this.PdfDestinationPath = pdfDestinationPath;
+            this.Assinar = assinar;
         }
 
+        public bool Assinar { get; set; }
         public Color CorCaneta { get; }
         public Atraso MargemAtraso { get; }
         public IDetectorPeriodoFolha DetectorPeriodo { get; }

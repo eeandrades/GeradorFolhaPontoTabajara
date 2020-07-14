@@ -68,7 +68,7 @@ namespace GeradorFolhaPontoTabajara
                     IntervaloInicio = GeradorNumeros.FromTimeSpan(pathPadrao, GerarTimespanAleatorio(12, variacaoMin, variacaoMax, false)),
                     IntervaloFim = GeradorNumeros.FromTimeSpan(pathPadrao, GerarTimespanAleatorio(14, variacaoMin, variacaoMax, true)),
                     Fim = GeradorNumeros.FromTimeSpan(pathPadrao, GerarTimespanAleatorio(19, variacaoMin, variacaoMax, false)),
-                    Assinatura = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(pathPadrao, "Assinatura.png"))
+                    Assinatura = BitmapHelper.LoadIfExists(System.IO.Path.Combine(pathPadrao, "Assinatura.png"))
                 });
             }
 

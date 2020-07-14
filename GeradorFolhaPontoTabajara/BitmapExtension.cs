@@ -28,4 +28,16 @@ namespace GeradorFolhaPontoTabajara
             return new Point(start.X + part.Width, start.Y);
         }
     }
+
+    public static class BitmapHelper
+    {
+        public static Bitmap LoadIfExists(string path)
+        {
+            if (System.IO.File.Exists(path))
+                return (Bitmap) Bitmap.FromFile(path);
+            else
+                return new Bitmap(0, 0);
+        }
+    }
+
 }

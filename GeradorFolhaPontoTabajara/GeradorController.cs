@@ -21,7 +21,7 @@ namespace GeradorFolhaPontoTabajara
             {
                 IGerador gerador = GeradorFactory.Create(geradorType);
                 var pdfOutput = System.IO.Path.Combine(args.PdfDestinationPath, System.IO.Path.GetFileName(pdfFile));
-                gerador.Execute(new GeradorArgs(args.CorCaneta, args.MargemAtraso, args.DetectorPeriodo,  pdfFile, pdfOutput));
+                gerador.Execute(new GeradorArgs(args.CorCaneta, args.MargemAtraso, args.DetectorPeriodo,  args.Assinar, pdfFile, pdfOutput));
             }
 
             return pdfFiles.Length;

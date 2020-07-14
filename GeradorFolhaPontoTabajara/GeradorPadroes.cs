@@ -21,11 +21,11 @@ namespace GeradorFolhaPontoTabajara
             var path = base.GetPastaImagemAleatoria();
             return new Padrao()
             {
-                Inicio = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "inicio.png")),
-                IntervaloInicio = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "IntInicio.png")),
-                IntervaloFim = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "IntFim.png")),
-                Fim = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "Fim.png")),
-                Assinatura = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "Assinatura.png"))
+                Inicio = BitmapHelper.LoadIfExists(System.IO.Path.Combine(path, "inicio.png")),
+                IntervaloInicio = BitmapHelper.LoadIfExists(System.IO.Path.Combine(path, "IntInicio.png")),
+                IntervaloFim = BitmapHelper.LoadIfExists(System.IO.Path.Combine(path, "IntFim.png")),
+                Fim = BitmapHelper.LoadIfExists(System.IO.Path.Combine(path, "Fim.png")),
+                Assinatura =BitmapHelper.LoadIfExists(System.IO.Path.Combine(path, "Assinatura.png"))
             };
         }
 

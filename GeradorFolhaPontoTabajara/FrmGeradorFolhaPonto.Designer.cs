@@ -54,6 +54,7 @@
             this.cbbDetectorPeriodo = new System.Windows.Forms.ComboBox();
             this.lnkReferenciaGoogleCloudVision = new System.Windows.Forms.LinkLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ckbAssinar = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.successProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -79,7 +80,7 @@
             // 
             // btnGerar
             // 
-            this.btnGerar.Location = new System.Drawing.Point(810, 271);
+            this.btnGerar.Location = new System.Drawing.Point(809, 291);
             this.btnGerar.Name = "btnGerar";
             this.btnGerar.Size = new System.Drawing.Size(75, 23);
             this.btnGerar.TabIndex = 2;
@@ -149,7 +150,7 @@
             // 
             this.cbbImplementacao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbImplementacao.FormattingEnabled = true;
-            this.cbbImplementacao.Location = new System.Drawing.Point(365, 178);
+            this.cbbImplementacao.Location = new System.Drawing.Point(364, 198);
             this.cbbImplementacao.Name = "cbbImplementacao";
             this.cbbImplementacao.Size = new System.Drawing.Size(516, 21);
             this.cbbImplementacao.TabIndex = 4;
@@ -157,7 +158,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(363, 162);
+            this.label1.Location = new System.Drawing.Point(362, 182);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(45, 13);
             this.label1.TabIndex = 0;
@@ -238,7 +239,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(362, 210);
+            this.label5.Location = new System.Drawing.Point(361, 230);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(161, 13);
             this.label5.TabIndex = 0;
@@ -248,7 +249,7 @@
             // 
             this.cbbDetectorPeriodo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbDetectorPeriodo.FormattingEnabled = true;
-            this.cbbDetectorPeriodo.Location = new System.Drawing.Point(364, 226);
+            this.cbbDetectorPeriodo.Location = new System.Drawing.Point(363, 246);
             this.cbbDetectorPeriodo.Name = "cbbDetectorPeriodo";
             this.cbbDetectorPeriodo.Size = new System.Drawing.Size(516, 21);
             this.cbbDetectorPeriodo.TabIndex = 4;
@@ -256,7 +257,7 @@
             // lnkReferenciaGoogleCloudVision
             // 
             this.lnkReferenciaGoogleCloudVision.AutoSize = true;
-            this.lnkReferenciaGoogleCloudVision.Location = new System.Drawing.Point(363, 250);
+            this.lnkReferenciaGoogleCloudVision.Location = new System.Drawing.Point(362, 270);
             this.lnkReferenciaGoogleCloudVision.Name = "lnkReferenciaGoogleCloudVision";
             this.lnkReferenciaGoogleCloudVision.Size = new System.Drawing.Size(404, 26);
             this.lnkReferenciaGoogleCloudVision.TabIndex = 6;
@@ -276,11 +277,22 @@
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
             // 
+            // ckbAssinar
+            // 
+            this.ckbAssinar.AutoSize = true;
+            this.ckbAssinar.Location = new System.Drawing.Point(365, 162);
+            this.ckbAssinar.Name = "ckbAssinar";
+            this.ckbAssinar.Size = new System.Drawing.Size(60, 17);
+            this.ckbAssinar.TabIndex = 8;
+            this.ckbAssinar.Text = "Assinar";
+            this.ckbAssinar.UseVisualStyleBackColor = true;
+            // 
             // FrmGeradorFolhaPonto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(897, 305);
+            this.ClientSize = new System.Drawing.Size(897, 331);
+            this.Controls.Add(this.ckbAssinar);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lnkReferenciaGoogleCloudVision);
             this.Controls.Add(this.cbbCorCaneta);
@@ -341,6 +353,7 @@
         private System.Windows.Forms.ComboBox cbbDetectorPeriodo;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.CheckBox ckbAssinar;
     }
 }
 

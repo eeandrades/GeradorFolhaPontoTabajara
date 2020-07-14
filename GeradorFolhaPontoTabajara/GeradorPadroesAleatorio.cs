@@ -39,11 +39,11 @@ namespace GeradorFolhaPontoTabajara
             for (int i = 0; i < numeroPastas; i++)
             {
                 var path = this.PastasImagens[i];
-                inicio[i] = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "inicio.png"));
-                intervaloInicio[i] = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "IntInicio.png"));
-                intervaloFim[i] = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "IntFim.png"));
-                fim[i] = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "Fim.png"));
-                assinatura[i] = (Bitmap)Bitmap.FromFile(System.IO.Path.Combine(path, "Assinatura.png"));
+                inicio[i] = BitmapHelper.LoadIfExists(System.IO.Path.Combine(path, "inicio.png"));
+                intervaloInicio[i] = BitmapHelper.LoadIfExists(System.IO.Path.Combine(path, "IntInicio.png"));
+                intervaloFim[i] = BitmapHelper.LoadIfExists(System.IO.Path.Combine(path, "IntFim.png"));
+                fim[i] = BitmapHelper.LoadIfExists(System.IO.Path.Combine(path, "Fim.png"));
+                assinatura[i] = BitmapHelper.LoadIfExists(System.IO.Path.Combine(path, "Assinatura.png"));
             }
 
             Random rnd = new Random();
