@@ -177,7 +177,7 @@ namespace GeradorFolhaPontoTabajara
                 MesclaBitmap(bmpFolhaPonto, conteudoLinha.IntervaloInicio, new Point(SPosicaoIntervaloInicio, linha + 1), args.CorCaneta);
                 MesclaBitmap(bmpFolhaPonto, conteudoLinha.IntervaloFim, new Point(SPosicaoIntervaloFim, linha + 1), args.CorCaneta);
                 MesclaBitmap(bmpFolhaPonto, conteudoLinha.Fim, new Point(SPosicaoFim, linha + 1), args.CorCaneta);
-                MesclaBitmap(bmpFolhaPonto, conteudoLinha.Assinatura, new Point(rnd.Next(SPosicaoAssinatura - 5, SPosicaoAssinatura + 5) - 35, linha - 4), args.CorCaneta);
+                //MesclaBitmap(bmpFolhaPonto, conteudoLinha.Assinatura, new Point(rnd.Next(SPosicaoAssinatura - 5, SPosicaoAssinatura + 5) - 35, linha - 4), args.CorCaneta);
             }
 
 
@@ -349,7 +349,7 @@ namespace GeradorFolhaPontoTabajara
             var img = PdfToBitmap(args.PdfSourcePath);
             var info = this.PreencherTabelaHorarios(args, img);
             this.PreencherData(args, info, img);
-            img = this.PreencherAssinatura(args, img);
+            //img = this.PreencherAssinatura(args, img);
             this.Save(args.PdfDestinationPath, img);
         }
     }
